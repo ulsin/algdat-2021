@@ -1,2 +1,4 @@
 # Project exclude paths
 /out/
+/.idea/
+/algdat-2021.iml
