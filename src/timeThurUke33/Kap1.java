@@ -45,17 +45,17 @@ public class Kap1 {
 
     public static int maks2(int[] a)   // versjon 2 av maks-metoden
     {
-        int m = 0;               // indeks til største verdi
-        int maksverdi = a[0];    // største verdi
+        int m = 0;               // indeks til største verdi // O1
+        int maksverdi = a[0];    // største verdi // O2
 
-        for (int i = 1; i < a.length; i++) if (a[i] > maksverdi)
+        for (int i = 1; i < a.length; i++) if (a[i] > maksverdi) //1 + n + n-1 + 2(n-1)
         {
-            maksverdi = a[i];     // største verdi oppdateres
-            m = i;                // indeks til største verdi oppdateres
+            maksverdi = a[i];     // største verdi oppdateres / x + x
+            m = i;                // indeks til største verdi oppdateres / x
         }
-        return m;   // returnerer indeks/posisjonen til største verdi
+        return m;   // returnerer indeks/posisjonen til største verdi / 1
 
-    } // maks
+    } // maks // 1 + 2 + 1 + n + n-1 + 2(n-1) + x + x + 1 = (4n + 2x + 2)
 
     public static int[] minMaks(int[] a) {
         return new int[] {findMin(a), maks(a)};
