@@ -1,16 +1,19 @@
-package timeThurUke33;
-
-import java.lang.reflect.Array;
-import java.util.Arrays;
+package kap1;
 
 public class Kap1 {
     public static void main(String[] args) {
         int[] values = {9, 13, 5, 10, 13};
         int[] values2 = {10, 5, 7, 2, 9, 1, 3, 8, 4, 6};
-        System.out.println(findMin(values));
-        System.out.println(maks(values));
-        System.out.println(Arrays.toString(minMaks(values2)));
-        System.out.println(fakul(4));
+        int[] empty;
+        int[] oneArr = {1};
+//        System.out.println(findMin(values));
+//        System.out.println(maks(values));
+//        System.out.println(Arrays.toString(minMaks(values2)));
+//        System.out.println(fakul(4));
+//        System.out.println(maks3(values));
+        System.out.println(harmonisk(100000));
+        System.out.println(euler(1000));
+        System.out.println(avgStorreTall(100000));
     }
 
     public static int findMin(int[] innArr) { // O 1 + 3n + 2x
@@ -63,7 +66,7 @@ public class Kap1 {
         int m = 0;                     // indeks til største verdi
         int maksverdi = a[0];          // største verdi
         int temp = a[sist];            // tar vare på siste verdi
-        a[sist] = 0x7fffffff;          // legger tallet 2147483647 sist
+        a[sist] = maksverdi;          // legger tallet 2147483647 sist
 
         for (int i = 0; ; i++)         // i starter med 0
             if (a[i] >= maksverdi)       // denne blir sann til slutt
@@ -71,11 +74,12 @@ public class Kap1 {
                 if (i == sist)             // sjekker om vi er ferdige
                 {
                     a[sist] = temp;          // legger siste verdi tilbake
-                    return temp >= maksverdi ? sist : m;   // er siste størst?
+                    return temp > maksverdi ? sist : m;   // er siste størst?
                 }
                 else
                 {
                     maksverdi = a[i];        // maksverdi oppdateres
+                    a[sist] = maksverdi;
                     m = i;                   // m oppdateres
                 }
             }
@@ -92,4 +96,21 @@ public class Kap1 {
         }
         return fak;
     }
+
+    public static double harmonisk(int a) {
+        double utTall = 0;
+        for (int i = 1; i <= a; i++) {
+            utTall += 1.0 / i; // bruker 1.0 istedenfor å caste double
+        }
+        return utTall;
+    }
+
+    public static double euler(int a) {
+        return harmonisk(a) - Math.log(a);
+    }
+
+    public static double avgStorreTall(int a) {
+                return Math.log(a) - 0.423;
+    }
+
 }
