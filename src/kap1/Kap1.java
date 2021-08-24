@@ -1,5 +1,7 @@
 package kap1;
 
+import java.util.Arrays;
+
 public class Kap1 {
     public static void main(String[] args) {
         int[] values = {9, 13, 5, 10, 13};
@@ -14,6 +16,16 @@ public class Kap1 {
         System.out.println(harmonisk(100000));
         System.out.println(euler(1000));
         System.out.println(avgStorreTall(100000));
+        sortMaksForst(values, andreMaks(values,0, values.length));
+    }
+
+    // Bytte plass er lurt
+    public static void sortMaksForst(int[] values, int maxindex) {
+        for (int k = 0; ) // dette må inn i en for loop
+        int temp = values[0]; // holder første plass
+        values[0] = values[maxindex]; // setter størse verdi først
+        values[maxindex] = temp; // setter første tall inn der høyeste var
+        System.out.println(Arrays.toString(values));
     }
 
     public static int findMin(int[] innArr) { // O 1 + 3n + 2x
@@ -28,6 +40,19 @@ public class Kap1 {
         }
 
         return index;
+    }
+
+    // Returnerer index til største tall i array
+    public static int andreMaks(int[] values, int fra, int til) { // tar inn intervall for å søke
+        int index = fra; // 1
+        int maxvalue = values[0]; // 1 ??
+        for (int i = fra+1; i < til; i++) { // 1 + 2(n-1)
+            if (values[i] > maxvalue) { // 1 + 1 (arra access og sammenligning)
+                maxvalue = values[i]; // x + x
+                index = i; // x
+            }
+        }
+        return index; // 1
     }
 
     public static int maks(int[] a)  // a er en heltallstabell // O 5n + x
