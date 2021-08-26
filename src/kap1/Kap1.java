@@ -1,6 +1,7 @@
 package kap1;
 
 import java.util.Arrays;
+import java.util.OptionalInt;
 
 public class Kap1 {
     public static void main(String[] args) {
@@ -17,6 +18,15 @@ public class Kap1 {
         System.out.println(euler(1000));
         System.out.println(avgStorreTall(100000));
         sortMaksForst(values2);
+        Tester.makstest();
+        System.out.println("Antall feil: " + Tester.makstestFlere1());
+        System.out.println("Antall feil: " + Tester.makstestFlere2());
+        System.out.println("Antall feil: " + Tester.makstestFlere3());
+
+        OptionalInt m = maks4(values2);
+        if (m.isPresent()) {
+            System.out.println(m.getAsInt());
+        }
     }
 
     // Bytte plass er lurt
@@ -67,7 +77,7 @@ public class Kap1 {
 
         for (int i = 1; i < a.length; i++) // obs: starter med i = 1 // O 1 + n + n - 1
         {
-            if (a[i] >= a[m]) m = i;  // indeksen oppdateres // oppdateres også til siste nå siden >= istedenfor > // O 3(n - 1) + x
+            if (a[i] > a[m]) m = i;  // indeksen oppdateres // oppdateres også til siste nå siden >= istedenfor > // O 3(n - 1) + x
         }
 
         return m;  // returnerer indeksen/posisjonen til største verdi // O 1
@@ -76,6 +86,9 @@ public class Kap1 {
 
     public static int maks2(int[] a)   // versjon 2 av maks-metoden
     {
+        if (a.length < 1) // O 1
+            throw new java.util.NoSuchElementException("Tabellen a er tom!");
+
         int m = 0;               // indeks til største verdi // O1
         int maksverdi = a[0];    // største verdi // O2
 
@@ -90,6 +103,9 @@ public class Kap1 {
 
     public static int maks3(int[] a)  // versjon 3 av maks-metoden
     {
+        if (a.length < 1) // O 1
+            throw new java.util.NoSuchElementException("Tabellen a er tom!");
+
         int sist = a.length - 1;       // siste posisjon i tabellen
         int m = 0;                     // indeks til største verdi
         int maksverdi = a[0];          // største verdi
@@ -112,6 +128,23 @@ public class Kap1 {
                 }
             }
     } // maks
+
+    public static OptionalInt maks4(int[] a)           // indeks til største verdi
+    {
+        if (a.length < 1) return OptionalInt.empty();   // en konstruksjonsmetode
+
+        int m = 0, maksverdi = a[0];                    // startindeks og verdi
+
+        for (int i = 1; i < a.length; i++)              // starter med i = 1
+        {
+            if (a[i] > maksverdi)
+            {
+                m = i; maksverdi = a[i];                    // oppdaterer
+            }
+        }
+
+        return OptionalInt.of(m);                       // en konstruksjonsmetode
+    }
 
     public static int[] minMaks(int[] a) {
         return new int[] {findMin(a), maks(a)};
