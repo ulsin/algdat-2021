@@ -470,3 +470,38 @@ Resultat:
         System.out.println((double) sum / 10.0);
 ```
 
+# Oppgaver til Avsnitt 1.1.10
+1. Utvid class Program og gjør om main-metoden slik som det bes om i Programkode 1.1.10. Kjør programmet! Du kan endre tidsforbruket ved å endre tabellstørrelse og antall gjentagelser. Lag f.eks. tabellen være dobbelt så stor (n = 200_000).
+
+```java
+Faste kostnader: 3 millisek
+Maks1-metoden: 305 millisek
+Maks2-metoden: 192 millisek
+Maks3-metoden: 171 millisek
+Maks4-metoden: 192 millisek
+```
+
+2. Gjør om main-metoden slik at tabellen a inneholder tallene fra 1 til n i sortert rekkefølge. Hvordan går det da med tidsforbruket?
+
+Med
+```java
+        int[] a = new int[n];
+        for (int i = 0; i < n; i++) {
+            a[i] = i + 1;
+        }
+```
+blir tiden
+```java
+Faste kostnader: 5 millisek
+Maks1-metoden: 264 millisek
+Maks2-metoden: 265 millisek
+Maks3-metoden: 718 millisek
+Maks4-metoden: 174 millisek
+```
+
+Maks 3 blir mye dyrere?
+
+
+3. Har du tilgang til flere datamaskiner? Er tidsforbruket avhengig av hvilket miljø dette kompileres og kjøres i? 
+
+- yikes guess jeg kan kjøre på desktop en gang.

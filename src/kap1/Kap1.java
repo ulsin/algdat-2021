@@ -41,14 +41,51 @@ public class Kap1 {
 
 //        System.out.println(antallMaks(randPerm5(100000)));
 
-        int sum = 0;
-        int[] randArr = randPerm5(500000);
-        for (int i = 0; i < 10; i++) {
-            randPermOmstokk(randArr);
-            sum += antallMaks(randArr);
-        }
-        System.out.println((double) sum / 10.0);
+//        int sum = 0;
+//        int[] randArr = randPerm5(500000);
+//        for (int i = 0; i < 10; i++) {
+//            randPermOmstokk(randArr);
+//            sum += antallMaks(randArr);
+//        }
+//        System.out.println((double) sum / 10.0);
 
+        maksTimer();
+    }
+
+    public static void maksTimer() {
+        int n = 200_000, antall = 2_000; // tabellstørrelse og gjentagelser
+        long tid = 0;                    // for tidsmåling
+        int a[] = randPerm5(n);           // en permutasjon av 1, . .  n
+
+//        int[] a = new int[n];
+//        for (int i = 0; i < n; i++) {
+//            a[i] = i + 1;
+//        }
+
+        tid = System.currentTimeMillis();    // leser av klokken
+        for (int i = 0; i < antall; i++) kostnader(a);
+        tid = System.currentTimeMillis() - tid;    // medgått tid
+        System.out.println("Faste kostnader: " + tid + " millisek");
+
+        tid = System.currentTimeMillis();    // leser av klokken
+        for (int i = 0; i < antall; i++) maks(a);  // Programkode 1.1.2
+        tid = System.currentTimeMillis() - tid;     // medgått tid
+        System.out.println("Maks1-metoden: " + tid + " millisek");
+
+        tid = System.currentTimeMillis();    // leser av klokken
+        for (int i = 0; i < antall; i++) maks2(a);  // Programkode 1.1.4
+        tid = System.currentTimeMillis() - tid;     // medgått tid
+        System.out.println("Maks2-metoden: " + tid + " millisek");
+
+        tid = System.currentTimeMillis();    // leser av klokken
+        for (int i = 0; i < antall; i++) maks3(a);  // Programkode 1.1.5
+        tid = System.currentTimeMillis() - tid;     // medgått tid
+        System.out.println("Maks3-metoden: " + tid + " millisek");
+
+        tid = System.currentTimeMillis();    // leser av klokken
+        for (int i = 0; i < antall; i++) maks4(a);  // Programkode 1.1.5
+        tid = System.currentTimeMillis() - tid;     // medgått tid
+        System.out.println("Maks4-metoden: " + tid + " millisek");
     }
 
     public static void randPermTimer() {
@@ -57,18 +94,25 @@ public class Kap1 {
         int[] a = randPerm2(n);
         tid = System.currentTimeMillis() - tid;
         System.out.println(tid);
-        long tid2 = System.currentTimeMillis();
+        tid = System.currentTimeMillis();
         int[] b = randPerm3(n);
-        tid2 = System.currentTimeMillis() - tid2;
-        System.out.println(tid2);
-        long tid3 = System.currentTimeMillis();
+        tid = System.currentTimeMillis() - tid;
+        System.out.println(tid);
+        tid = System.currentTimeMillis();
         int[] c = randPerm4(n);
-        tid3 = System.currentTimeMillis() - tid3;
-        System.out.println(tid3);
-        long tid4 = System.currentTimeMillis();
+        tid = System.currentTimeMillis() - tid;
+        System.out.println(tid);
+        tid = System.currentTimeMillis();
         int[] d = randPerm4(n);
-        tid4 = System.currentTimeMillis() - tid4;
-        System.out.println(tid4);
+        tid = System.currentTimeMillis() - tid;
+        System.out.println(tid);
+    }
+
+    public static int kostnader(int[] a)  // legges i class Program
+    {
+        int m = 0;
+        for (int i = 1; i < a.length; i++) {}  // en tom blokk
+        return m;
     }
 
     // Bytte plass er lurt
