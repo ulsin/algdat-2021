@@ -21,7 +21,7 @@ public class Permutasjoner {
             for(int i = 0; i < arr.length - 1; i++){
                 System.out.print(arr[i] + ", ");
             }
-            if(arr.length > 0)
+            if(arr.length > 0) // this makes it so that the method doesn't crash if input is only 1
                 System.out.print(arr[arr.length - 1]);
             System.out.println("]");
             return;

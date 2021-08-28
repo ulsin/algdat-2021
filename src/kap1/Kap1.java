@@ -1,7 +1,6 @@
 package kap1;
 
-import java.util.Arrays;
-import java.util.OptionalInt;
+import java.util.*;
 
 public class Kap1 {
     public static void main(String[] args) {
@@ -14,19 +13,62 @@ public class Kap1 {
 //        System.out.println(Arrays.toString(minMaks(values2)));
 //        System.out.println(fakul(4));
 //        System.out.println(maks3(values));
-        System.out.println(harmonisk(100000));
-        System.out.println(euler(1000));
-        System.out.println(avgStorreTall(100000));
-        sortMaksForst(values2);
-        Tester.makstest();
-        System.out.println("Antall feil: " + Tester.makstestFlere1());
-        System.out.println("Antall feil: " + Tester.makstestFlere2());
-        System.out.println("Antall feil: " + Tester.makstestFlere3());
+//        System.out.println(harmonisk(100000));
+//        System.out.println(euler(1000));
+//        System.out.println(avgStorreTall(100000));
+//        sortMaksForst(values2);
+//        Tester.makstest();
+//        System.out.println("Antall feil: " + Tester.makstestFlere1());
+//        System.out.println("Antall feil: " + Tester.makstestFlere2());
+//        System.out.println("Antall feil: " + Tester.makstestFlere3());
 
-        OptionalInt m = maks4(values2);
-        if (m.isPresent()) {
-            System.out.println(m.getAsInt());
+//        OptionalInt m = maks4(values2);
+//        if (m.isPresent()) {
+//            System.out.println(m.getAsInt());
+//        }
+
+/*
+        int[] a = new int[10];            // en tabell med plass til n tall
+        Arrays.setAll(a, i -> i + 1);    // legger inn tallene 1, 2, . , n
+        randPermOmstokkIntervall(a,0,4);
+        System.out.println(Arrays.toString(a));
+*/
+
+//        randPermTimer();
+
+//        System.out.println(Arrays.toString(randPermIntervall(5,9)));
+//        System.out.println(Arrays.toString(oneToNShuffle(5)));
+
+//        System.out.println(antallMaks(randPerm5(100000)));
+
+        int sum = 0;
+        int[] randArr = randPerm5(500000);
+        for (int i = 0; i < 10; i++) {
+            randPermOmstokk(randArr);
+            sum += antallMaks(randArr);
         }
+        System.out.println((double) sum / 10.0);
+
+    }
+
+    public static void randPermTimer() {
+        int n = 10000*5;
+        long tid = System.currentTimeMillis();
+        int[] a = randPerm2(n);
+        tid = System.currentTimeMillis() - tid;
+        System.out.println(tid);
+        long tid2 = System.currentTimeMillis();
+        int[] b = randPerm3(n);
+        tid2 = System.currentTimeMillis() - tid2;
+        System.out.println(tid2);
+        long tid3 = System.currentTimeMillis();
+        int[] c = randPerm4(n);
+        tid3 = System.currentTimeMillis() - tid3;
+        System.out.println(tid3);
+        long tid4 = System.currentTimeMillis();
+        int[] d = randPerm4(n);
+        tid4 = System.currentTimeMillis() - tid4;
+        System.out.println(tid4);
     }
 
     // Bytte plass er lurt
@@ -145,6 +187,168 @@ public class Kap1 {
 
         return OptionalInt.of(m);                       // en konstruksjonsmetode
     }
+
+    public static int[] randPerm2(int n)  // virker, men er svært ineffektiv
+    {
+        Random r = new Random();      // en randomgenerator
+        int[] a = new int[n];         // en tabell med plass til n tall
+
+        for (int i = 0; i < n; )      // vi skal legge inn n tall
+        {
+            int k = r.nextInt(n) + 1;   // trekker et nytt tall k
+
+            int j = 0;
+            for ( ; j < i; j++)         // leter i intervallet a[0:i>
+            {
+                if (a[j] == k) break;     // stopper hvis vi har k fra før
+            }
+            if (i == j) a[i++] = k;     // legger inn k og øker i
+        }
+        return a;                     // tabellen returneres
+    }
+
+    public static int[] randPerm3(int n)  // virker, men er ineffektiv
+    {
+        Random r = new Random();         // en randomgenerator
+        int[] a = new int[n];            // en tabell med plass til n tall
+        boolean[] har = new boolean[n];  // en boolsk tabell
+
+        for (int i = 0; i < n; )         // vi skal legge inn n tall
+        {
+            int k = r.nextInt(n);          // trekker en indeks k
+            if (har[k] == false)           // sjekker
+            {
+                har[k] = true;               // oppdaterer den boolske tabellen
+                a[i++] = k + 1;              // legger inn k + 1 i a
+            }
+        }
+        return a;                        // tabellen returneres
+    }
+
+    public static int[] randPerm4(int n) { // skrev denne selv yo
+        Random r = new Random();
+        int[] a = new int[n];
+
+        for (int i = 1; i <= n; ) {
+            int k = r.nextInt(n);
+            if (a[k] == 0) {
+                a[k] = i++;
+            }
+        }
+        return a;
+    }
+
+    public static void bytt(int[] a, int i, int j)
+    {
+        int temp = a[i]; a[i] = a[j]; a[j] = temp;
+    }
+
+    public static int[] randPerm5(int n)  // en effektiv versjon
+    {
+        Random r = new Random();         // en randomgenerator
+        int[] a = new int[n];            // en tabell med plass til n tall
+
+        Arrays.setAll(a, i -> i + 1);    // legger inn tallene 1, 2, . , n
+
+        for (int k = n - 1; k > 0; k--)  // løkke som går n - 1 ganger
+        {
+            int i = r.nextInt(k+1);        // en tilfeldig tall fra 0 til k
+            bytt(a,k,i);                   // bytter om
+        }
+
+        return a;                        // permutasjonen returneres
+    }
+
+    public static int[] randPerm5Venstre(int n)  // en effektiv versjon
+    {
+        Random r = new Random();         // en randomgenerator
+        int[] a = new int[n];            // en tabell med plass til n tall
+
+        for (int i = 0; i < n; i++) { // var kanskje ikke nodvendig
+            a[i] = n - i;
+        }
+
+        System.out.println(Arrays.toString(a));
+
+        for (int k = 0; k < n; k++)  // løkke som går n - 1 ganger
+        {
+            int i = r.nextInt(k+1);        // en tilfeldig tall fra 0 til k
+            bytt(a,i,k); // bytter om fra venstre
+        }
+
+        return a;                        // permutasjonen returneres
+    }
+
+    public static void randPermOmstokk(int[] a)  // stokker om a
+    {
+        Random r = new Random();     // en randomgenerator
+
+        for (int k = a.length - 1; k > 0; k--)
+        {
+            int i = r.nextInt(k + 1);  // tilfeldig tall fra [0,k]
+            bytt(a,k,i);
+        }
+    }
+
+    public static void randPermOmstokkIntervall(int[] a, int start, int slutt)
+    {
+        Random r = new Random();
+
+        for (int k = start; k < slutt; k++)
+        {
+            int i = r.nextInt(slutt-start);
+            bytt(a,k,i+start);
+        }
+    }
+
+    public static int[] randPermIntervall(int n, int k) { // lagde ogsa denne selv
+        Random r = new Random();
+        int[] a = new int[k - n + 1];
+
+        for (int i = 0; i < a.length; i++) {
+            a[i] = n + i;
+        }
+
+        randPermOmstokk(a);
+
+        return a;
+    }
+
+    public static int[] oneToNShuffle(int n) {
+        ArrayList<Integer> intList = new ArrayList<>();
+
+        for (int i = 1; i <= n; i++) {
+            intList.add(i);
+        }
+
+        Collections.shuffle(intList);
+
+        int[] intArr = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            intArr[i] = intList.get(i);
+        }
+
+        return intArr;
+    }
+
+    public static int antallMaks(int[] a)    // teller opp i a
+    {
+        int antall = 0;            // antall tall
+        int maksverdi = a[0];
+
+        for (int i = 1; i < a.length; i++)    // går gjennom tabellen a
+        {
+            if (a[i] > maksverdi)    // a[i] er større enn største foran
+            {
+                antall++;              // har funnet et nytt tall
+                maksverdi = a[i];      // oppdaterer maksverdi
+            }
+        }
+
+        return antall;    // de som er større enn det største foran
+    }
+
 
     public static int[] minMaks(int[] a) {
         return new int[] {findMin(a), maks(a)};
