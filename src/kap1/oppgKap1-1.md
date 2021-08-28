@@ -506,3 +506,14 @@ Maks 3 blir mye dyrere?
 
 - yikes guess jeg kan kjøre på desktop en gang.
 
+# Oppgaver til Avsnitt 1.1.11
+1. Kjør Programkode 1.1.11. Utvid slik at vi i tillegg får den minste verdien (metoden min()). Da må det lages en ny strøm. Hva skjer hvis tabellen a er tom (lengde lik 0)?
+2. Metoden sum() finner summen som et int-tall. Bruk den til å finne tabellens sum. Hva skjer hvis du bruker en tom tabell?
+
+3. Metoden average() returnerer en OptionalDouble og den har metoden getAsDouble(). Gjør om Programkode 1.1.11 slik at tabellens gjennomsnittsverdi skrives ut. Da må det øverst være med: import java.util.OptionalDouble;
+
+4. Metoden summaryStatistics() returnerer en IntSummaryStatistics. Da får en både maks, min, gjennomsnitt, sum og antall på én gang. Prøv den.
+
+5. Grensesnittet IntStream har mange metoder med funksjonsgrensesnitt som parameter. Klarer du å bruke noen av dem. Vi skal diskutere slike metoder senere. 
+
+- **Se main i Kap1.java**
