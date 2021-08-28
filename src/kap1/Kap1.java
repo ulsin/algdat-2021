@@ -1,6 +1,7 @@
 package kap1;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class Kap1 {
     public static void main(String[] args) {
@@ -49,8 +50,30 @@ public class Kap1 {
 //        }
 //        System.out.println((double) sum / 10.0);
 
-        maksTimer();
+//        maksTimer();
+        int[] a = {8,3,5,7,9,6,10,2,1,4};  // en heltallstabell
+//        int[] a = new int[0]; // gir ingen verdi!!
+        IntStream s = Arrays.stream(a);    // fra int-tabell til IntStream
+        IntStream sMin = Arrays.stream(a);
+        IntStream sSum = Arrays.stream(a);
+        IntStream sAvg = Arrays.stream(a);
+        IntStream sStat = Arrays.stream(a);
+
+        OptionalInt resultat = s.max();    // kaller max-metoden
+        OptionalInt min = sMin.min();
+
+        int intSum = sSum.sum();
+
+        OptionalDouble dblAvg = sAvg.average();
+
+        IntSummaryStatistics stat = sStat.summaryStatistics();
+
+        System.out.println(stat);
+
+        if (resultat.isPresent() && min.isPresent()) System.out.println("maks: " + resultat.getAsInt() + " min: " + min.getAsInt() + " sum: " + intSum + " avg: " + dblAvg.toString());
+        else System.out.println("Ingen verdi!");
     }
+
 
     public static void maksTimer() {
         int n = 200_000, antall = 2_000; // tabellstørrelse og gjentagelser

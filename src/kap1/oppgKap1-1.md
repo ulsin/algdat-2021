@@ -505,3 +505,4 @@ Maks 3 blir mye dyrere?
 3. Har du tilgang til flere datamaskiner? Er tidsforbruket avhengig av hvilket miljø dette kompileres og kjøres i? 
 
 - yikes guess jeg kan kjøre på desktop en gang.
+
