@@ -348,6 +348,57 @@ Hvis intervallet f.eks. inneholder verdiene 4, 2, 13, 7, skal intervallet etter 
 ## Gjorde ikke 1.2.5 Siden ukesoppg ikke ba om det
 
 # Oppgaver til Avsnitt 1.2.6
-1. 	Sjekk at versjonen av nestMaks-metoden i Programkode 1.2.5 a) utfører nøyaktig 2n − 3 sammenligninger når tabellen er sortert.
-2. 	For hvilke tabeller bruker metoden færrest mulig sammenligninger?
-3. 	Er det noen forskjell på gjennomsnittlig effektivitet, effektiviteten i det mest ugunstige tilfellet og effektiviteten i det beste tilfellet for maks-metoden, dvs. for den metoden som finner posisjonen til den største verdien i en tabell?
+1. Sjekk at versjonen av nestMaks-metoden i Programkode 1.2.5 a) utfører nøyaktig 2n − 3 sammenligninger når tabellen er sortert.
+
+```java
+  public static int[] nestMaks(int[] a) // ny versjon
+  {
+    int n = a.length;     // 1
+    if (n < 2) throw      // 1
+      new java.util.NoSuchElementException("a.length(" + n + ") < 2!");
+
+    int m = 0;      // 1
+    int nm = 1;     // 1
+
+    // bytter om m og nm hvis a[1] er større enn a[0]
+    if (a[1] > a[0]) { m = 1; nm = 0; } // 1 + 1 + 1, x + x
+
+    int maksverdi = a[m];                // 1
+    int nestmaksverdi = a[nm];           // 1
+
+    for (int i = 2; i < n; i++)
+    {
+      if (a[i] > nestmaksverdi)
+      {
+        if (a[i] > maksverdi)
+        {
+          nm = m;
+          nestmaksverdi = maksverdi;     // ny nest størst
+
+          m = i;
+          maksverdi = a[m];              // ny størst
+        }
+        else
+        {
+          nm = i;
+          nestmaksverdi = a[nm];         // ny nest størst
+        }
+      }
+    }
+
+    return new int[] {m,nm};    // n i posisjon 0, nm i posisjon 1
+
+  } // nestMaks
+```
+????
+
+2. For hvilke tabeller bruker metoden færrest mulig sammenligninger?
+- When the two largest numbers are in the front of the array.
+
+3. Er det noen forskjell på gjennomsnittlig effektivitet, effektiviteten i det mest ugunstige tilfellet og effektiviteten i det beste tilfellet for maks-metoden, dvs. for den metoden som finner posisjonen til den største verdien i en tabell?
+- Koster minst when maks er first, mest when maks er sist
+
+# Oppgaver til Avsnitt 1.2.8
+1. 	Et «møte» er det samme som en sammenligning. Hvor mange sammenligninger trengs for å gjennomføre en turnering med 16 deltagere slik som i Figur 1.2.8 a)? Hva med 8 deltagere? Hva med 2k deltagere der k er et positivt heltall.
+2. 	Tegn et turneringstre slik som i Figur 1.2.8 a) for tilfellene: a) 3, 15, 8, 11, 13, 9, 10, 5 og b) 10, 17, 13, 16, 17, 8, 12, 15, 9, 15, 16, 15, 10, 13, 14, 17.
+3. 	Bruk de samme 16 verdiene som i Figur 1.2.8 a). Lag en turnering for å finne minst verdi.
