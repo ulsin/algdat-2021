@@ -1,9 +1,9 @@
-package kap1;
+package kap1.del1;
 
 import java.util.*;
 import java.util.stream.IntStream;
 
-public class Kap1 {
+public class Kap1Del1 {
     public static void main(String[] args) {
         int[] values = {9, 13, 5, 10, 13};
         int[] values2 = {10, 5, 7, 2, 9, 1, 3, 8, 4, 6};

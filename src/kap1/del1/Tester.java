@@ -1,8 +1,8 @@
-package kap1;
+package kap1.del1;
 
 import java.util.NoSuchElementException;
 
-import static kap1.Kap1.*;
+import static kap1.del1.Kap1Del1.*;
 
 public class Tester {
     // fra kompendie 1.1.7

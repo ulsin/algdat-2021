@@ -1,4 +1,4 @@
-package kap1;
+package kap1.del1;
 
 public class Permutasjoner {
     // hentet fra https://stackoverflow.com/questions/30387185/print-out-all-permutations-of-an-array
