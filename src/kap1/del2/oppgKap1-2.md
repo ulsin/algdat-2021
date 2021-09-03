@@ -399,6 +399,43 @@ Hvis intervallet f.eks. inneholder verdiene 4, 2, 13, 7, skal intervallet etter 
 - Koster minst when maks er first, mest when maks er sist
 
 # Oppgaver til Avsnitt 1.2.8
-1. 	Et «møte» er det samme som en sammenligning. Hvor mange sammenligninger trengs for å gjennomføre en turnering med 16 deltagere slik som i Figur 1.2.8 a)? Hva med 8 deltagere? Hva med 2k deltagere der k er et positivt heltall.
-2. 	Tegn et turneringstre slik som i Figur 1.2.8 a) for tilfellene: a) 3, 15, 8, 11, 13, 9, 10, 5 og b) 10, 17, 13, 16, 17, 8, 12, 15, 9, 15, 16, 15, 10, 13, 14, 17.
-3. 	Bruk de samme 16 verdiene som i Figur 1.2.8 a). Lag en turnering for å finne minst verdi.
+1. Et «møte» er det samme som en sammenligning. Hvor mange sammenligninger trengs for å gjennomføre en turnering med 16 deltagere slik som i Figur 1.2.8 a)? Hva med 8 deltagere? Hva med 2k deltagere der k er et positivt heltall.
+- 15 in the first one, so 2^k - 1 
+2. Tegn et turneringstre slik som i Figur 1.2.8 a) for tilfellene: a) 3, 15, 8, 11, 13, 9, 10, 5 og b) 10, 17, 13, 16, 17, 8, 12, 15, 9, 15, 16, 15, 10, 13, 14, 17.
+
+```java
+             15
+      15            13
+  15     11     13    10
+3, 15, 8, 11, 13, 9, 10, 5 
+         
+        
+                             17
+              17                             17
+       17             17             16            17
+   17     13      17      15     15     16      13      17
+10, 17, 13, 16, 17, 8, 12, 15, 9, 15, 16, 15, 10, 13, 14, 17
+```
+3. Bruk de samme 16 verdiene som i Figur 1.2.8 a). Lag en turnering for å finne minst verdi.
+
+```java
+                              5
+              5                              10
+      5              23              15             10
+  9      5       23     26       15     19      16      10
+9, 21, 5, 25, 27, 23, 26, 28, 17, 15, 19, 18, 16, 20, 14, 10
+```
+
+# Oppgaver til Avsnitt 1.2.9
+1. Finn antall noder i Figur 1.2.8 a)? Hvor mange er bladnoder? Hvor mange er indre noder?
+- 16 leaf nodes, 15 inner nodes, 31 in total
+2. Hvor mange noder er det på nivå k (k = 0, 1, 2, . . ) i et turneringstre av den typen som Figur 1.2.8 a) viser?
+- 2^k where the first level is k = 0
+3. Anta at antall deltagere n i en turnering er på formen n = 2^k, dvs. n = 1, 2, 4, 8, osv. Finn svarene på flg. spørsmål uttrykt ved n: 
+Hvor mange noder får turneringstreet? Hvilken høyde får treet? Hvor mange er bladnoder og hvor mange er indre noder? Hvor mange sammenligninger utføres i turneringen?
+- n = 2^k
+- Height is 2n - 1
+- Leaf nodes are log_2(n) `for n = 8, only 3 leaf nodes???`
+- Inner nodes are n - 1
+- Comparisons are n - 1
+- Total nodes are 2n-1
