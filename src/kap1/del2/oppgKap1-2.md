@@ -434,8 +434,173 @@ Hvis intervallet f.eks. inneholder verdiene 4, 2, 13, 7, skal intervallet etter 
 3. Anta at antall deltagere n i en turnering er på formen n = 2^k, dvs. n = 1, 2, 4, 8, osv. Finn svarene på flg. spørsmål uttrykt ved n: 
 Hvor mange noder får turneringstreet? Hvilken høyde får treet? Hvor mange er bladnoder og hvor mange er indre noder? Hvor mange sammenligninger utføres i turneringen?
 - n = 2^k
-- Height is 2n - 1
-- Leaf nodes are log_2(n) `for n = 8, only 3 leaf nodes???`
+- Heigth is log_2(n)
+- Leaf nodes are n
 - Inner nodes are n - 1
 - Comparisons are n - 1
 - Total nodes are 2n-1
+
+# Oppgaver til Avsnitt 1.2.10
+1. Tegn et turneringstre, slik som i Figur 1.2.10 c), skriv opp de som vinneren har slått ut og finn den nest største verdien for flg. tre samlinger av tall:
+      a) 10, 17, 13, 16, 17, 8, 12, 15, 9, 15 | 
+- 10 tall totalt, 2n-1 = 19 noder totalt
+- 10 blad noder
+- 9 inner nodes
+- log2(10) rundet opp er 4, 3 blir 8 noder og 4 blir 16, 16 - 10 gjør at 6 har walkover. Skal da fylle nest siste først, så siste 
+
+Riktig forsøk, fylte først nest site rad left to right, så siste rad
+
+```java
+                     17
+             17,             17, 
+        15,      17,    16,     17
+   15,    15, 10, 17, 13, 16, 17, 8,
+12, 15, 9, 15
+```
+Vinneren er 17, har slått ut 17, 15, 10 (venstre vinner default når de er like, samle childen som ikke er lik og ikke til venstre)
+
+Feil forsøk, fylte venstre til høyre
+```java
+                           17
+               17                        15
+       17             17           15         15
+   17      16     17,    8,      12, 15,   9,    15
+10, 17, 13, 16, 
+```
+Vinneren er 17, nest største er 17
+Har slått ut 15, 17, 8, 16, 10
+
+  b) 5, 11, 7, 13, 2, 9, 10, 8, 3, 14, 6, 12
+12 noder totalt, 16 - 12 = 4 noder har walkover
+
+Riktig forsøk
+
+```java
+                       14
+              14,                 13
+      10,           14,      11,    13
+  9,     10,   14,    12,  5, 11, 7, 13,
+2, 9, 10, 8, 3, 14, 6, 12
+```
+Vinneren er 14, har slått ut 13, 10, 12, 3
+
+Feil forsøk, fylte ikke ut nest siste først
+```java
+                       14
+            13                        14
+      13            10         14         12
+  11,    13,    9,    10,   3,   14,   6,   12
+5, 11, 7, 13, 2, 9, 10, 8, 
+```
+Vinneren er 14, nest største er 13 (finner vest å skjekke childs til vinner nodes, og også uavgjort nodes?)
+  c) 5, 11, 7, 13, 2, 9, 10, 8, 3, 14, 6, 12, 9, 13, 4, 7, 13, 1, 14
+  19 tall totalt,32 - 19 = 13 har walkover
+Riktig forsøk
+
+```java
+                                  14
+                      14,                        14
+              14,              13,          10,          14
+       13,         14,     11,   13,    10,    8,    14,    12
+   13,   13,    14,  5, 11, 7, 13, 2, 9, 10, 8, 3, 14, 6, 12, 9
+13, 4, 7, 13, 1, 14
+```
+Vinneren er 14, har slått ut 14, 13, 13 5, 1
+
+
+Feil forsøkkkk
+  ```java
+                                     14
+                       14,                         14, 
+              13,             14,           13,          14
+        13,         10,    8,    14,    12,    13,    13,   14
+    11,    13,    9, 10, 8, 3, 14, 6, 12, 9, 13, 4, 7, 13, 1, 14
+  5, 11, 7, 13, 2, 9, 
+  ```
+Vinner er 14, nest største er 14
+
+# Oppgaver til Avsnitt 1.2.11
+
+Tre forskjellige trær
+
+Tre forskjellige trær
+1. Svar på flg. spørsmål for hvert av trærne A, B, C, D, E og F over: a) Er treet komplett? b) Er treet perfekt?  c) Er treet fullt?  d) Hva er treets høyde?  e) Hvor mange bladnoder har treet?  f) Er det et turneringstre?
+
+A: Ikke Komplett, Ikke perfekt, Fult, Høydeen er 3, 6 Bladnoder, Ikke komplett og fult, ikke turnering
+
+B: Ikke Komplett, Ikke perfekt, Fult, Hyden er 3, 6 bladnoder, Ikke komplett og fult, ikke turnering
+
+C: Ikke Komplett, Ikke perfekt, Ikke Fult, Høyden er 3, 6 bladnoder, ikke komplett og fult, ikke turnering
+
+D: Ikke komplett, Ikke perfekt, ikke fullt, høyden er 3, 4 bladnoder, ikke turnering
+
+E:      Komplett, Ikke Perfekt, Fult, Høyde 3, 7 bladnoder, Turnering
+
+F: Ikke komplett, Ikke perfekt, Ikke fult, Høyde 3, 4 blad, Ikke turnering
+
+2. Tegn et perfekt binærtre med høyde 3. Tegn et komplett binærtre med 10 noder. Tegn et komplett 
+binærtre med 20 noder.
+
+Perfekt med høyde 3
+
+```java
+                x
+         x              x 
+   x        x       x       x
+x     x   x   x   x   x   x   x
+```
+Komplett med 10 noder
+
+```java
+         x
+     x      x
+  x   x   x   x
+x   x   x
+```
+
+Komplett med 20 Noder
+
+```java
+x
+xx
+xxxx
+xxxxxxxx
+xxxxx
+```
+
+3. Tegn et fullt binærtre med 5 noder? Hvor mange slike finnes det? Hvor mange fulle binærtrær med 7 noder finnes det? Vis at antallet noder i et fullt binærtre alltid er et odde tall.
+Bare oddetall noder i første rad, ellers partal, 1 + n*2 blir alltids oddetall
+
+Fult med 5
+
+```java
+      x
+  x       x
+x   x
+```
+også
+
+```java
+      x
+  x       x
+        x   x
+```
+
+Fult med 7
+
+```java
+      x
+  x       x
+x   x   x   x
+```
+
+> 4. Vis at ⌈log2(n+1)⌉ - 1 = ⌊log2(n)⌋ for n >= 1   Se forøvrig Setning 1.2.11. 
+
+# Oppgaver til Avsnitt 1.2.13
+1. Sjekk at Programkode 1.2.13 a) virker. Obs: metoden returnerer størst og nest størst verdi og ikke indeksene. Legg inn en setning som skriver ut tabellen b etter ut turneringen er gjennomført. Dermed kan en se resultatet av turneringen.
+
+2. La Programkode 1.2.13 a) returnere indeksene til størst og nest størst verdi.
+
+3. Metoden public static void kopier(int[] a, int i, int[] b, int j, int ant) skal virke som arraycopy() fra class System. Lag den!
+
+4. Gitt tabeller int[] a og int[] b med a.length <= b.length. Lag kode, vha. arraycopy() eller vha. kopier() fra Oppgave 3, slik at 1) a kopieres inn først i b,  2) a kopieres inn bakerst i b og 3) a kopieres inn på midten av b (gitt at lengdeforskjellen er et partall). 

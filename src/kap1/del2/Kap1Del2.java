@@ -22,8 +22,10 @@ public class Kap1Del2 {
         Tabell.skrivln(Tabell.heleTall(5,10));
         Tabell.skrivln(Tabell.naturligeTall(10));
 
-        a = Tabell.randPerm(10);
-        int[] c1 = null;
+        System.out.println(Arrays.toString(Tabell.nestMaksTurnering(a)));
+
+//        a = Tabell.randPerm(10);
+//        int[] c1 = null;
 
 //        Tabell.maks(a,-1,10);
         //Tabell.maks(a,0,11);
