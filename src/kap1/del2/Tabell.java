@@ -36,6 +36,46 @@ public class Tabell {
         System.out.print("]");
     }
 
+    // Bytte plass er lurt
+    public static void sortMaksForst(int[] values) {
+        int ceil = values.length;
+        for (int k = 0; k < ceil; k++) {
+            int temp = values[k]; // holder første plass
+            int maks = andreMaks(values, k, ceil);
+            values[k] = values[maks]; // setter størse verdi først
+            values[maks] = temp; // setter første tall inn der høyeste var
+        } // dette må inn i en for loop
+        System.out.println(Arrays.toString(values));
+    }
+
+    // Returnerer index til største tall i array
+    public static int andreMaks(int[] values, int fra, int til) { // tar inn intervall for å søke
+        int index = fra; // 1
+        int maxvalue = values[fra]; // 1 ??
+        for (int i = fra+1; i < til; i++) { // 1 + 2(n-1)
+            if (values[i] > maxvalue) { // 1 + 1 (arra access og sammenligning)
+                maxvalue = values[i]; // x + x
+                index = i; // x
+            }
+        }
+        return index; // 1
+    }
+
+    public static int findMin(int[] innArr) { // O 1 + 3n + 2x
+        int index = 0; // O 1
+        int minVal = innArr[0]; // O 1
+
+        for (int i = 1; i < innArr.length; i++) { // O 1 + n + n-1 = 2n
+            if (innArr[i] < minVal) { // O n-1
+                minVal = innArr[i]; // x
+                index = i; // x
+            }
+        }
+
+        return index;
+    }
+
+
     public static void skrivln(int[] a, int fra, int til) {
         fratilKontroll(a.length, fra, til);
         System.out.print("[ ");
@@ -60,23 +100,6 @@ public class Tabell {
             System.out.print(a[i] + " ");
         }
         System.out.print("]");
-    }
-
-    public static void skriv(char[] a) {
-        System.out.print("[ ");
-        for (char c : a) {
-            System.out.print(c + " ");
-        }
-        System.out.print("]");
-    }
-
-    public static void skrivln(char[] a, int fra, int til) {
-        fratilKontroll(a.length, fra, til);
-        System.out.print("[ ");
-        for (int i = fra; i < til; i++) {
-            System.out.print(a[i] + " ");
-        }
-        System.out.print("]\n");
     }
 
     public static void skrivln(char[] a) {
@@ -170,6 +193,7 @@ public class Tabell {
         }
     }
 
+    // Maks metode fra Programkode 1.2.1 modifisert etter oppskrift fra 1.2.3 3.
     public static int maks(int[] a, int fra, int til)
     {
         fratilKontroll(a.length, fra, til);
