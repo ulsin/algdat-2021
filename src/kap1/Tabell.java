@@ -1,4 +1,4 @@
-package kap1.del2;
+package kap1;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
@@ -9,6 +9,7 @@ public class Tabell {
         // privat konstruktør hindrer dannelsen av objekter av denne klassen
     }
 
+    // From chapter 1.2
     public static void bytt(int[] a, int i, int j)
     {
         int temp = a[i]; a[i] = a[j]; a[j] = temp;
@@ -312,4 +313,159 @@ public class Tabell {
         return new int[] {maksverdi,nestmaksverdi}; // størst og nest størst
 
     } // nestMaks
+
+    // From chapter 1.3 instructions, just made it myself haha sorta works
+    // Takes an array in and turns it into the lower permutation lexicographically
+    public static void lowerPerm(int[] a){
+        int minIndex = a.length - 1;
+        int minVal = a[minIndex];
+        for (int i = a.length - 2; i >= 0; i--) {
+            if (a[i] < minVal) {
+                minVal = a[i];
+                minIndex = i;
+            }
+            if (a[i] > minVal) { // if a[i] is larger than the current minval, then it needs to be swapped
+                bytt(a, minIndex, i);
+                snu(a, i+1);
+                break;
+            }
+        }
+    }
+
+    //    Programkode 1.3.1 a)
+    public static void snu(int[] a, int v, int h)  // snur intervallet a[v:h]
+    {
+        while (v < h) bytt(a, v++, h--);
+    }
+
+    public static void snu(int[] a, int v)  // snur fra og med v og ut tabellen
+    {
+        snu(a, v, a.length - 1);
+    }
+
+    public static void snu(int[] a)  // snur hele tabellen
+    {
+        snu(a, 0, a.length - 1);
+    }
+
+    //     Programkode 1.3.1 b)
+    public static boolean nestePermutasjon(int[] a)
+    {
+        int i = a.length - 2;                    // i starter nest bakerst
+        while (i >= 0 && a[i] > a[i + 1]) i--;   // går mot venstre
+        if (i < 0) return false;                 // a = {n, n-1, . . . , 2, 1}
+
+        int j = a.length - 1;                    // j starter bakerst
+        while (a[j] < a[i]) j--;                 // stopper når a[j] > a[i]
+        bytt(a,i,j); snu(a,i + 1);               // bytter og snur
+
+        return true;                             // en ny permutasjon
+    }
+
+    public static int antallMaks(int[] a)    // teller opp i a
+    {
+        int antall = 0;            // antall tall
+        int maksverdi = a[0];
+
+        for (int i = 1; i < a.length; i++)    // går gjennom tabellen a
+        {
+            if (a[i] > maksverdi)    // a[i] er større enn største foran
+            {
+                antall++;              // har funnet et nytt tall
+                maksverdi = a[i];      // oppdaterer maksverdi
+            }
+        }
+
+        return antall;    // de som er større enn det største foran
+    }
+
+    //    Programkode 1.3.4 a)
+    public static void utvalgssortering(int[] a)
+    {
+        for (int i = 0; i < a.length - 1; i++)
+            bytt(a, i, min(a, i, a.length));  // to hjelpemetoder
+    }
+
+    // wow this is just really bad
+    public static void selectionSortNoHelp(int[] a, int from, int to) {
+        fratilKontroll(a.length, from, to);
+        if (from < to) {
+            for (int i = from + 1; i < to; i++) {
+
+                // starting with finding minvalue
+                int index = from;
+                int minverdi = a[from];
+
+                for (int j = from; j < to; j++) {
+                    if (minverdi > a[j]) {
+                        index = j;
+                        minverdi = a[j];
+                    }
+                }
+                // testing the minimum value and swapping if it is smaller than current
+                if (a[from] > minverdi) {
+                    int temp = a[from];
+                    a[from] = a[index];
+                    a[index] = temp;
+                    selectionSortNoHelp(a, from++, to);
+                }
+            }
+        }
+    }
+
+    public static void selectionSortNoHelp(int[] a, int from) {
+        selectionSortNoHelp(a, from, a.length);
+    }
+
+    public static void selectionSortNoHelp(int[] a) {
+        selectionSortNoHelp(a, 0, a.length);
+    }
+
+    //     Programkode 1.3.5 b)
+    public static int lineærsøk(int[] a, int verdi) // legges i class Tabell
+    {
+        if (a.length == 0 || verdi > a[a.length-1])
+            return -(a.length + 1);  // verdi er større enn den største
+
+        int i = 0; for( ; a[i] < verdi; i++);  // siste verdi er vaktpost
+
+        return verdi == a[i] ? i : -(i + 1);   // sjekker innholdet i a[i]
+    }
+
+    //oppgave 1.3.5.4
+    public static int lineærsøkReverse(int[] a, int verdi) // legges i class Tabell
+    {
+        if (a.length == 0 || verdi > a[a.length-1])
+            return -(a.length + 1);  // verdi er større enn den største
+
+        int i = a.length - 1; for( ; i > 0; i--);  // siste verdi er vaktpost
+
+        return verdi == a[i] ? i : -(i + 1);   // sjekker innholdet i a[i]
+    }
+
+    //oppgave 1.3.5.5a
+    public static int lineærsøkHopp(int[] a, int k, int verdi) // legges i class Tabell
+    {
+        if (a.length == 0 || verdi > a[a.length-1])
+            return -(a.length + 1);  // verdi er større enn den største
+
+        int i = 0;
+        for (; a[i] < verdi; i += k) {
+            if (a[i] > verdi) {
+                i -= k;
+                for (; i < verdi; i++);
+            }
+        }
+        return verdi == a[i] ? i : -(i + 1);   // sjekker innholdet i a[i]
+    }
+
+    //oppgave 1.3.5.5b
+    public static int kvadratrotSøk(int[] a, int verdi) // legges i class Tabell
+    {
+        return lineærsøkHopp(a, (int) Math.floor(Math.sqrt(a.length)), verdi);
+    }
+
+
+
+
 }

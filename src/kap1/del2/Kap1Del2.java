@@ -1,5 +1,7 @@
 package kap1.del2;
 
+import kap1.Tabell;
+
 import java.util.Arrays;
 
 public class Kap1Del2 {
