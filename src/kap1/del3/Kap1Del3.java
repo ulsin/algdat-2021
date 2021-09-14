@@ -9,39 +9,39 @@ import java.util.Arrays;
 
 public class Kap1Del3 {
     public static void main(String[] args) {
-        int[] values2 = {10, 5, 7, 2, 9, 1, 3, 8, 4, 6};
-        System.out.println(Arrays.toString(values2));
-        lowerPerm(values2);
-        System.out.println(Arrays.toString(values2));
-        lowerPerm(values2);
-        System.out.println(Arrays.toString(values2));
-        lowerPerm(values2);
-        System.out.println(Arrays.toString(values2));
-
-        // Programkode 1.3.1 c)
-        System.out.println("Programkode 1.3.1 c)");
-        int[] a = {3,1,4,9,7,10,8,6,5,2};        // permutasjon av tallene fra 1 til 10
-        nestePermutasjon(a);              // lager neste permutasjon
-        System.out.println(Arrays.toString(a));  // [3, 1, 4, 9, 8, 2, 5, 6, 7, 10]
-
-        //        Programkode 1.3.1 d)
-        System.out.println("Programkode 1.3.1 d)");
-        int[] b = {1,2,3,4,5};                // første permutasjon
-        int sum = 0;                          // hjelpevariabel
-
-        do { sum += antallMaks(b); }          // se Programkode 1.1.9 a)
-        while (nestePermutasjon(b));   // lager neste permutasjon
-
-        System.out.println(sum);              // Utskrift: 154
-
-        int[] woop = {2, 3, 6, 1, 4, 5};
-        int[] woop2 = {2, 3, 1, 6, 5, 4};
-        nestePermutasjon(woop);
-        System.out.println(Arrays.toString(woop));
-        nestePermutasjon(woop);
-        System.out.println(Arrays.toString(woop));
-        nestePermutasjon(woop2);
-        System.out.println(Arrays.toString(woop2));
+//        int[] values2 = {10, 5, 7, 2, 9, 1, 3, 8, 4, 6};
+//        System.out.println(Arrays.toString(values2));
+//        lowerPerm(values2);
+//        System.out.println(Arrays.toString(values2));
+//        lowerPerm(values2);
+//        System.out.println(Arrays.toString(values2));
+//        lowerPerm(values2);
+//        System.out.println(Arrays.toString(values2));
+//
+//        // Programkode 1.3.1 c)
+//        System.out.println("Programkode 1.3.1 c)");
+//        int[] a = {3,1,4,9,7,10,8,6,5,2};        // permutasjon av tallene fra 1 til 10
+//        nestePermutasjon(a);              // lager neste permutasjon
+//        System.out.println(Arrays.toString(a));  // [3, 1, 4, 9, 8, 2, 5, 6, 7, 10]
+//
+//        //        Programkode 1.3.1 d)
+//        System.out.println("Programkode 1.3.1 d)");
+//        int[] b = {1,2,3,4,5};                // første permutasjon
+//        int sum = 0;                          // hjelpevariabel
+//
+//        do { sum += antallMaks(b); }          // se Programkode 1.1.9 a)
+//        while (nestePermutasjon(b));   // lager neste permutasjon
+//
+//        System.out.println(sum);              // Utskrift: 154
+//
+//        int[] woop = {2, 3, 6, 1, 4, 5};
+//        int[] woop2 = {2, 3, 1, 6, 5, 4};
+//        nestePermutasjon(woop);
+//        System.out.println(Arrays.toString(woop));
+//        nestePermutasjon(woop);
+//        System.out.println(Arrays.toString(woop));
+//        nestePermutasjon(woop2);
+//        System.out.println(Arrays.toString(woop2));
 
 /*
 
@@ -62,24 +62,60 @@ public class Kap1Del3 {
         System.out.println(System.currentTimeMillis() - tid);
 */
 
-        int[] woop5 = randPerm(10);
-        System.out.println(Arrays.toString(woop5));
-        selectionSortNoHelp(woop5, 0,5);
-        System.out.println(Arrays.toString(woop5));
+//        int[] woop5 = randPerm(10);
+//        System.out.println(Arrays.toString(woop5));
+//        selectionSortNoHelp(woop5, 0,5);
+//        System.out.println(Arrays.toString(woop5));
+//
+//        //        Programkode 1.3.5 c)
+//        System.out.println("Programkode 1.3.5 c)");
+//        int[] c = {3,8,10,12,14,16,21,24,27,30,32,33,34,37,40};  // Figur 1.3.5 a)
+//        int[] d = new int[0];
+//        System.out.println(Tabell.lineærsøk(c,2));              // utskrift: -1
+//        System.out.println(Tabell.lineærsøk(c,15));             // utskrift: -6
+//        System.out.println(Tabell.lineærsøk(c,16));             // utskrift: 5
+//        System.out.println(Tabell.lineærsøk(c,40));             // utskrift: 14
+//        System.out.println(Tabell.lineærsøk(c,41));             // utskrift: -16
+//        System.out.println(Tabell.lineærsøk(d,2));              // utskrift: -1
+//        // ser ut som at ved negativ verdi så blir det
+//
+//        System.out.println("Oppgave 1.3.6");
+//        int[] binArr = {1, 3, 4, 4, 5, 7, 7, 7, 7, 8, 9, 10, 10, 12, 15, 15, 15};
+//        System.out.println("Binærsøk 1");
+//        System.out.println(binærsøk1(binArr, 4));  // 3
+//        System.out.println(binærsøk1(binArr, 7));  // 8
+//        System.out.println(binærsøk1(binArr, 10)); // 12
+//        System.out.println(binærsøk1(binArr, 15)); // 14
+//        System.out.println("Binærsøk 3");
+//        System.out.println(binærsøk3(binArr, 4));
+//        System.out.println(binærsøk3(binArr, 7));
+//        System.out.println(binærsøk3(binArr, 10));
+//        System.out.println(binærsøk3(binArr, 15));
 
-        //        Programkode 1.3.5 c)
-        System.out.println("Programkode 1.3.5 c)");
-        int[] c = {3,8,10,12,14,16,21,24,27,30,32,33,34,37,40};  // Figur 1.3.5 a)
-        int[] d = new int[0];
-        System.out.println(Tabell.lineærsøk(c,2));              // utskrift: -1
-        System.out.println(Tabell.lineærsøk(c,15));             // utskrift: -6
-        System.out.println(Tabell.lineærsøk(c,16));             // utskrift: 5
-        System.out.println(Tabell.lineærsøk(c,40));             // utskrift: 14
-        System.out.println(Tabell.lineærsøk(c,41));             // utskrift: -16
-        System.out.println(Tabell.lineærsøk(d,2));              // utskrift: -1
-        // ser ut som at ved negativ verdi så blir det
+        //        Programkode 1.3.8 e)
+//        int[] e = {13,11,10,20,15,5,3,2,14,10,12,6,7,4,16};
+//        Tabell.innsettingssortering(e);
+//        System.out.println(Arrays.toString(e));
+        // Utskrift: [2, 3, 4, 5, 6, 7, 10, 10, 11, 12, 13, 14, 15, 16, 20]
 
-        int[] binArr = {1, 3, 4, 4, 5, 7, 7, 7, 7, 8, 9, 10, 10, 12, 15, 15, 15};
+        //        Programkode 1.3.8 h)
+//        int[] gap = {1,4,10,23,57,132,301,701,1577,3548,7984,17965,40423,90952,204642};
+//        int[] a = Tabell.randPerm(200_000);       // en tilfeldig tabell
+//        System.out.println(Tabell.erSortert(a));  // sjekker tabellen
+//
+//        long tid = System.currentTimeMillis();    // starter klokken
+//
+////        Tabell.innsettingssortering(a);           // sorterer | 4350ms
+////        for (int i = gap.length - 1; i >= 0; i--) Tabell.shell(a,gap[i]); // | 41ms
+////        Arrays.sort(a); // | 107ms
+//
+//
+//        System.out.println(System.currentTimeMillis() - tid);  // tiden
+//        System.out.println(Tabell.erSortert(a));  // sjekker sorteringen
+
+
+
+
 
     }
 }

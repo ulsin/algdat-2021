@@ -158,7 +158,135 @@ c)  Hvis «hopplengden» k settes lik heltallsdelen av kvadratroten til tabellen
 
 ## Seksjon 1.3.6: 
 3. 	Gitt at søkeverdien har duplikater. Bruker vi 1. eller 2. versjon av binærsøk, vet vi ikke hvem av dem som den returnerte indeksen hører til. Gitt verdiene: 1, 3, 4, 4, 5, 7, 7, 7, 7, 8, 9, 10, 10, 12, 15, 15, 15. Bruk 1. versjon. Søk etter i) 4, ii) 7, iii) 10 og iv) 15. Hvilken av verdiene hører den returnerte indeksen til? Obs. Det er det samme om det er 1. eller 2. versjon. De gir alltid de samme returverdi.
+```java
+        int[] binArr = {1, 3, 4, 4, 5, 7, 7, 7, 7, 8, 9, 10, 10, 12, 15, 15, 15};
+        System.out.println(binærsøk1(binArr, 4));  // 3
+        System.out.println(binærsøk1(binArr, 7));  // 8
+        System.out.println(binærsøk1(binArr, 10)); // 12
+        System.out.println(binærsøk1(binArr, 15)); // 14
+```
+
+Ser ut som at den gir siste verdi hver gang
+
 4. 	3. versjon av binærsøk returnerer alltid indeksen til den første av dem hvis søkeverdien det søkes forekommer flere ganger. Sjekk at det stemmer for tallene i Oppgave 3.
+```java
+        System.out.println("Binærsøk 3");
+        System.out.println(binærsøk3(binArr, 4));
+        System.out.println(binærsøk3(binArr, 7));
+        System.out.println(binærsøk3(binArr, 10));
+        System.out.println(binærsøk3(binArr, 15));
+        
+        Oppgave 1.3.6
+        Binærsøk 1
+        3
+        8
+        12
+        14
+        Binærsøk 3
+        2
+        5
+        11
+        14
+```
 
 ##Seksjon 1.3.8: 
-oppgave 3, 4, 5, 6, 7, 8
+3. Sett deg inn i metodene copyOf() og copyOfRange() fra klassen Arrays. De brukes både til å «utvide» en tabell og til å lage en kopi av hele eller en del av en tabell.
+> Copies the specified range of the specified array into a new array.
+```java
+    public static int[] copyOfRange(int[] original, int from, int to) {
+        int newLength = to - from;
+        if (newLength < 0) {
+            throw new IllegalArgumentException(from + " > " + to);
+        } else {
+            int[] copy = new int[newLength];
+            System.arraycopy(original, from, copy, 0, Math.min(original.length - from, newLength));
+            return copy;
+        }
+    }
+```
+> Copies the specified array, truncating or padding with nulls (if necessary) so the copy has the specified length.
+```java
+    public static int[] copyOf(int[] original, int newLength) {
+        int[] copy = new int[newLength];
+        System.arraycopy(original, 0, copy, 0, Math.min(original.length, newLength));
+        return copy;
+    }
+```
+```java
+public static void arraycopy(Object src,
+             int srcPos,
+             Object dest,
+             int destPos,
+             int length)
+```
+
+4. Setningen for (int i = antall; i > k; i--) a[i] = a[i-1]; i Programkode 1.3.8 a) forskyver verdier i tabellen. Dette kan også gjøres ved hjelp av metoden arraycopy() i klassen System. Gjør det!
+```java
+        //        Programkode 1.3.8 a)
+        int[] a = {3,5,6,10,10,11,13,14,16,20,0,0,0,0,0};  // en tabell
+        int antall = 10;                                   // antall verdier
+
+        if (antall >= a.length) throw new IllegalStateException("Tabellen er full");
+
+        int nyverdi = 10;                                  // ny verdi
+        int k = Tabell.binærsøk3(a, 0, antall, nyverdi);    // søker i a[0:antall>
+        if (k < 0) k = -(k + 1);                           // innsettingspunkt
+
+//        for (int i = antall; i > k; i--) a[i] = a[i-1];    // forskyver
+        System.arraycopy(a,k,a,k+1,antall+1);
+
+        a[k] = nyverdi;                                    // legger inn
+        antall++;                                          // øker antallet
+
+        Tabell.skrivln(a, 0, antall);  // Se Oppgave 4 og 5 i Avsnitt 1.2.2
+```
+
+
+5. Se på innsettings- og utvalgssortering. Se Figur 1.3.8 g). Hvor mange sammenligninger brukes i gjennomsnitt i hver av dem hvis det er 1000 verdier?
+
+![Sorteringsalgoritmer av kvadratisk orden](Sorteringsalgoritmer%20av%20kvadratisk%20orden.png)
+
+Utvalg = 1000 * (999)/2 = ish 500k
+Insetting = 1000 * (1000 - 3)/4 - log(1000) + 0,577 = 250k - 2 ish, = 250k ish
+
+6. Lag kode som viser tidsforbruket til innsettings- og utvalgssortering. Den første har bare halvparten så mange sammenligninger, men har flere ombyttinger (eller tilordninger).
+```java
+        int[] a = randPerm(100000);
+        int[] b = new int[a.length];
+        System.arraycopy(a,0,b,0,b.length - 1);
+
+        long time = System.currentTimeMillis();
+        utvalgssortering(a);
+        System.out.println(System.currentTimeMillis() - time);
+
+        time = System.currentTimeMillis();
+        innsettingssortering(b);
+        System.out.println(System.currentTimeMillis() - time);
+        /* Utskrift
+         1686
+         964
+         */
+```
+
+7. Lag en versjon av innsettingssortering som sorterer i tabellintervallet a[fra:til>. Legg den i samleklassen Tabell.
+```java
+    public static void innsettingssortering(int[] a, int fra, int til)
+    {
+        //fratilkontroll (a.length, fra, til) // psuedo     
+   
+        for (int i = fra; i < til; i++)  // starter med i = 1
+        {
+            int verdi = a[i], j = i - 1;      // verdi er et tabellelemnet, j er en indeks
+            for (; j >= 0 && verdi < a[j]; j--) a[j+1] = a[j];  // sammenligner og flytter
+            a[j + 1] = verdi;                 // j + 1 er rett sortert plass
+        }
+    }
+
+    public static void innsettingssortering(int[] a) {
+        innsettingssortering(a,0, a.length);
+    }
+```
+
+
+8. En sorteringsmetode kalles stabil hvis like verdier har samme innbyrdes rekkefølge etter som før sorteringen. Sjekk at innsettingssortering er stabil.
+- Er vist stabil? Elementene flytter jo plass, om den ikke er sortert før noe flyttes inn

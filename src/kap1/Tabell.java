@@ -465,7 +465,87 @@ public class Tabell {
         return lineærsøkHopp(a, (int) Math.floor(Math.sqrt(a.length)), verdi);
     }
 
+    //     Programkode 1.3.6 a)
+    public static int binærsøk1(int[] a, int fra, int til, int verdi)
+    {
+        Tabell.fratilKontroll(a.length,fra,til);  // se Programkode 1.2.3 a)
+        int v = fra, h = til - 1;  // v og h er intervallets endepunkter
 
+        while (v <= h)    // fortsetter så lenge som a[v:h] ikke er tom
+        {
+            int m = (v + h)/2;      // heltallsdivisjon - finner midten
+            int midtverdi = a[m];   // hjelpevariabel for midtverdien
+
+            if (verdi == midtverdi) return m;          // funnet
+            else if (verdi > midtverdi) v = m + 1;     // verdi i a[m+1:h]
+            else  h = m - 1;                           // verdi i a[v:m-1]
+        }
+
+        return -(v + 1);    // ikke funnet, v er relativt innsettingspunkt
+    }
+
+    public static int binærsøk1(int[] a, int verdi)  // søker i hele a
+    {
+        return binærsøk1(a,0,a.length,verdi);  // bruker metoden over
+    }
+
+    // 3. versjon av binærsøk - returverdier som for Programkode 1.3.6 a)
+    public static int binærsøk3(int[] a, int fra, int til, int verdi)
+    {
+        Tabell.fratilKontroll(a.length,fra,til);  // se Programkode 1.2.3 a)
+        int v = fra, h = til - 1;  // v og h er intervallets endepunkter
+
+        while (v < h)  // obs. må ha v < h her og ikke v <= h
+        {
+            int m = (v + h)/2;  // heltallsdivisjon - finner midten
+
+            if (verdi > a[m]) v = m + 1;   // verdi må ligge i a[m+1:h]
+            else  h = m;                   // verdi må ligge i a[v:m]
+        }
+        if (h < v || verdi < a[v]) return -(v + 1);  // ikke funnet
+        else if (verdi == a[v]) return v;            // funnet
+        else  return -(v + 2);                       // ikke funnet
+    }
+
+    public static int binærsøk3(int[] a, int verdi)  // søker i hele a
+    {
+        return binærsøk3(a,0,a.length,verdi);  // bruker metoden over
+    }
+
+    //    Programkode 1.3.8 c)
+    public static void innsettingssortering(int[] a, int fra, int til)
+    {
+        for (int i = fra; i < til; i++)  // starter med i = 1
+        {
+            int verdi = a[i], j = i - 1;      // verdi er et tabellelemnet, j er en indeks
+            for (; j >= 0 && verdi < a[j]; j--) a[j+1] = a[j];  // sammenligner og flytter
+            a[j + 1] = verdi;                 // j + 1 er rett sortert plass
+        }
+    }
+
+    public static void innsettingssortering(int[] a) {
+        innsettingssortering(a,0, a.length);
+    }
+
+    // Programkode 1.3.8 f)
+    public static void shell(int[] a, int k)
+    {
+        for (int i = k; i < a.length; i++)
+        {
+            int temp = a[i], j = i - k;
+            for ( ; j >= 0 && temp < a[j]; j -= k) a[j + k] = a[j];
+            a[j + k] = temp;
+        }
+    }
+
+    //     Programkode 1.3.2 c)
+    public static boolean erSortert(int[] a)  // legges i samleklassen Tabell
+    {
+        for (int i = 1; i < a.length; i++)      // starter med i = 1
+            if (a[i-1] > a[i]) return false;      // en inversjon
+
+        return true;
+    }
 
 
 }
