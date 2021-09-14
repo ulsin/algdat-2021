@@ -58,23 +58,19 @@ public class Oblig1 {
     /* A Method that Returns an array of same lenght as input, containing indices pointing at values in the
      * input array, in sorted order*/
     public static int[] indekssortering(int[] a) {
-
-        int[] index = new int[a.length]; // creating the return array
-
         // retuning null array if the input array has no elements,
-        if (a.length == 0) {
+        if (a.length < 1) {
             return new int[0];
         }
 
-        if (a.length == 1) {
-            return new int[]{0};
-        }
+        int[] index = new int[a.length]; // creating the return array
+        int[] b = new int[a.length]; // helper array
 
-        // helper array
-        int[] b = new int[a.length];
+        // array copy
         for (int i = 0; i < a.length; i++) {
             b[i] = a[i];
         }
+
         uRepo.sortering(b);
 
         for (int i = 0; i < a.length; i++) {
