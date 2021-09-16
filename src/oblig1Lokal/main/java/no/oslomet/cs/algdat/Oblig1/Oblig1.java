@@ -2,6 +2,8 @@ package oblig1Lokal.main.java.no.oslomet.cs.algdat.Oblig1;
 
 ////// Løsningsforslag Oblig 1 ////////////////////////
 
+import kap1.Tabell;
+
 import java.util.NoSuchElementException;
 
 public class Oblig1 {
@@ -42,12 +44,47 @@ public class Oblig1 {
 
     ///// Oppgave 2 //////////////////////////////////////
     public static int antallUlikeSortert(int[] a) {
-        throw new UnsupportedOperationException();
+        if (!Tabell.erSortert(a)) {
+            throw new IllegalStateException();
+        }
+
+        if (a.length == 0) {
+            return 0;
+        }
+
+        int antUlike = 1; // needs to start on 1 because there is allways 1 unique number, and then increment when a new one is found
+
+        for (int i = 1; i < a.length; i++) { // haha denne blockerjo faktisk for length = 1
+            if (a[i-1] != a[i]) {
+                antUlike++;
+            }
+        }
+
+        return antUlike;
     }
 
     ///// Oppgave 3 //////////////////////////////////////
+    // Start with an element, then check all the previous ones if it exists already. If it doesn't, increment
     public static int antallUlikeUsortert(int[] a) {
-        throw new UnsupportedOperationException();
+        if (a.length == 0) {
+            return 0;
+        }
+
+        int antUlike = 1;
+
+        for (int i = 1; i < a.length; i++) {
+            boolean holder = true;
+            for (int j = i-1; j >= 0; j--) {
+                if (a[i] == a[j]) {
+                    holder = false;
+                    break;
+                }
+            }
+            if (holder) {
+                antUlike++;
+            }
+        }
+        return antUlike;
     }
 
     ///// Oppgave 4 //////////////////////////////////////
