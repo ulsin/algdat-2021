@@ -10,12 +10,34 @@ public class Oblig1 {
     //Bare en test
 
     ///// Oppgave 1 //////////////////////////////////////
+    // tar inn array and returns max value
     public static int maks(int[] a) {
-        throw new UnsupportedOperationException();
+        if (a.length == 0) {
+            throw new NoSuchElementException();
+        }
+
+        for (int i = 0; i < a.length-1; i++) {
+            if (a[i] > a[i+1]) {
+                uRepo.bytt(a,i,i+1);
+            }
+        }
+        return a[a.length-1];
     }
 
     public static int ombyttinger(int[] a) {
-        throw new UnsupportedOperationException();
+        if (a.length == 0) {
+            throw new NoSuchElementException();
+        }
+
+        int ombyttinger = 0;
+
+        for (int i = 0; i < a.length-1; i++) {
+            if (a[i] > a[i+1]) {
+                uRepo.bytt(a,i,i+1);
+                ombyttinger++;
+            }
+        }
+        return ombyttinger;
     }
 
     ///// Oppgave 2 //////////////////////////////////////
