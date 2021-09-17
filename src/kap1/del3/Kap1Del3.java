@@ -113,7 +113,18 @@ public class Kap1Del3 {
 //        System.out.println(System.currentTimeMillis() - tid);  // tiden
 //        System.out.println(Tabell.erSortert(a));  // sjekker sorteringen
 
+        int[] a = {13,2,8,10,16,9,15,4,18,14,12,11,7,5,3,6,17,1,20,19};
+        // v stopper 13, h goes to 1, swaps
+        // 1,2,8,10,16,9,15,4,18,14,12,11,7,5,3,6,17,13,20,19
+        // v stops at 16, h to 6, swaps
+        // 1,2,8,10,6,9,15,4,18,14,12,11,7,5,3,16,17,13,20,19
+        // v tops at 15, h at 3
+        // 1,2,8,10,6,9,3,4,18,14,12,11,7,5,15,16,17,13,20,19
+        // 1,2,8,10,6,9,3,4,5,14,12,11,7,18,15,16,17,13,20,19
+        // 1,2,8,10,6,9,3,4,5,7,12,11,14,18,15,16,17,13,20,19
 
+        int pos = Tabell.parter(a, 11);   // bruker 11 som skilleverdi
+        System.out.println(pos + "  " + Arrays.toString(a) + " " + a[pos]);
 
 
 

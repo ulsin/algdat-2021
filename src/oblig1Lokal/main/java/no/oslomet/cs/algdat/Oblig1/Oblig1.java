@@ -4,6 +4,7 @@ package oblig1Lokal.main.java.no.oslomet.cs.algdat.Oblig1;
 
 import kap1.Tabell;
 
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 
 public class Oblig1 {
@@ -88,9 +89,77 @@ public class Oblig1 {
     }
 
     ///// Oppgave 4 //////////////////////////////////////
-    public static void delsortering(int[] a) {
-        throw new UnsupportedOperationException();
-    }
+    // could start with counting odds and evens, and then giving indices for sorting??
+    // Sort entire array, and then swap position of first even with first odd and so on.
+
+//    public static void delsortering(int[] a) {
+//        if (a.length < 2) {
+//            return;
+//        }
+//
+//        int v = 0; // deklarerer venstre variabel
+//        int h = a.length - 1; // deklarerer høyre variabel
+//
+//        while (v < h) { // Looper igjennom array så lenge venstre er mindre enn høyre
+//            while (a[v] % 2 != 0 && v < h) // Sjekker om verdier fra venstre om det er oddetall.
+//                v++; // Hvis det er oddetall økes v variabelen med 1
+//
+//            while (a[h] % 2 == 0 && v < h) { // sjekker om verdier fra venstre er partall.
+//                h--; // hvis det er partall minsked h variabelen med 1
+//            }
+//            if (v < h) { //
+//                int temp = a[v];
+//                a[v] = a[h];
+//                a[h] = temp;
+//            }
+//        }
+//        // hvis venstre variabel har nådd høyre variabel og v er lik lengde på array eller om v er lik 0 så kjøres
+//        // kvikksortering på alle tallene fra venstre
+//        if (v == h && (v == a.length - 1 || v == 0)) {
+//            Tabell.kvikksortering(a, 0, a.length);
+//        } else {
+//            //Hvis arrayet er delt i 2. til venstre for v variabel har man alle oddetall og til høyre for h variabel har man
+//            //alle partall så kjøres kvikksortering på begge
+//
+//            //Kvikksotrering på venstre del(oddetall-del)
+//            Tabell.kvikksortering(a, 0, v);
+//            //kvikksortering på høyre del(partall-del)
+//            Tabell.kvikksortering(a, h, a.length);
+//        }
+//
+//
+//    }
+
+        public static void delsortering(int[] a) {
+            if (a.length < 2) {
+                return;
+            }
+
+            int v = 0;
+            int h = a.length - 1;
+
+            while (v < h) {
+                while (a[v] % 2 != 0 && v < h) { // while v is odd
+                    v++;
+                }
+                while (a[h] % 2 == 0 && v < h) { // while a[h] is even
+                    h--;
+                }
+                if (v < h) {
+                    Tabell.bytt(a, v, h);
+                }
+            }
+
+            if (v == h && (v == 0 || v == a.length - 1)) {
+                Tabell.kvikksortering(a);
+                return;
+            }
+
+            Tabell.kvikksortering(a,0,v);
+            Tabell.kvikksortering(a,h,a.length);
+
+
+        }
 
     ///// Oppgave 5 //////////////////////////////////////
     public static void rotasjon(char[] a) {
@@ -288,6 +357,20 @@ public class Oblig1 {
         public static void bytt(int[] a, int i, int j)
         {
             int temp = a[i]; a[i] = a[j]; a[j] = temp;
+        }
+
+        //    Programkode 1.3.8 c)
+        public static void innsettingssortering(int[] a, int fra, int til)
+        {
+            for (int i = fra; i < til; i++)  // starter med i = 1
+            {
+                int verdi = a[i], j = i - 1;      // verdi er et tabellelemnet, j er en indeks
+                for (; j >= 0 && verdi < a[j]; j--) a[j+1] = a[j];  // sammenligner og flytter
+                a[j + 1] = verdi;                 // j + 1 er rett sortert plass
+            }
+        }
+        public static void innsettingssortering(int[] a) {
+            innsettingssortering(a,0, a.length);
         }
     }
 
