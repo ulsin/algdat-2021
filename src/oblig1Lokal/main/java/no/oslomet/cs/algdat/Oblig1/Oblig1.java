@@ -139,22 +139,23 @@ public class Oblig1 {
             int h = a.length - 1;
 
             while (v < h) {
-                while (a[v] % 2 != 0 && v < h) { // while v is odd
+                while (a[v] % 2 != 0 && v < h) { // while v is odd, increment v | This needs to be != 0 and not == 1 for some reason, no idea
                     v++;
                 }
-                while (a[h] % 2 == 0 && v < h) { // while a[h] is even
+                while (a[h] % 2 == 0 && v < h) { // while a[h] is even, dercrement h
                     h--;
                 }
-                if (v < h) {
+                if (v < h) { // hinders last v and h from being swapped, but swaps all other times
                     Tabell.bytt(a, v, h);
                 }
             }
 
-            if (v == h && (v == 0 || v == a.length - 1)) {
+            if (v == h && (v == 0 || v == a.length - 1)) { // in case there are only odd, or only even numbers
                 Tabell.kvikksortering(a);
                 return;
             }
 
+            // Sorts the array first only the odd partition, and then only the even partition
             Tabell.kvikksortering(a,0,v);
             Tabell.kvikksortering(a,h,a.length);
 
@@ -163,12 +164,72 @@ public class Oblig1 {
 
     ///// Oppgave 5 //////////////////////////////////////
     public static void rotasjon(char[] a) {
-        throw new UnsupportedOperationException();
+        if (a.length < 2) {
+            return;
+        }
+
+        char temp = a[a.length - 1]; // holds the last element
+
+        // pulls everything up one index
+        for (int i = a.length-1; i > 0; i--) {
+            a[i] = a[i-1];
+        }
+
+        // sets first value to be the initial last value
+        a[0] = temp;
     }
 
     ///// Oppgave 6 //////////////////////////////////////
+
+    // Will try to solve using strings and chars
     public static void rotasjon(char[] a, int k) {
-        throw new UnsupportedOperationException();
+        if (a.length < 2 || k == 0) {
+            return;
+        }
+
+        if (k == 1) {
+            rotasjon(a);
+        }
+
+        System.out.println("Original k:" + k);
+
+        // If tests to set k to a more sensible value
+        if (k != 0 && (k > a.length || k < - a.length)) {
+            k = k % a.length; // sets k to just be the remainder of every rotation
+        }
+
+        if (k > a.length / 2) {
+            k = -(a.length - k); // sets rotation to be backwards if it is more than half
+        }
+
+        if (k < -a.length / 2) { // sets negative rotation to be forwards if it more than half
+            k = -(-a.length - k);
+        }
+
+        System.out.println("a.lenght: " + a.length + "\nk: " + k);
+
+        String holder = ""; // change this to be a helper char array?
+        if (k > 0) {
+            for (int i = a.length - 1; i > a.length - 1 - k; i--) {
+                holder += a[i];
+            }
+
+            //TODO forward rotation with one big jump, then inserting holder string at begining
+        } else {
+            for (int i = 0; i < -k; i++) {
+                holder += a[i];
+            }
+
+            //TODO backwards rotation with one big jump, then inserting holder string at the end
+        }
+
+        System.out.println(holder);
+
+
+        // old attempt that does not work
+        for (int i = 0; i < k; i++) {
+            rotasjon(a);
+        }
     }
 
     ///// Oppgave 7 //////////////////////////////////////
