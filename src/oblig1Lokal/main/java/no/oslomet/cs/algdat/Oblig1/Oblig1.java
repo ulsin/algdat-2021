@@ -238,10 +238,6 @@ public class Oblig1 {
                 a[i] = a[i+(-k)];
             }
 
-//            for (int l = 0; l < k; l++) {
-//                a[a.length - 1 - l] = holder[l];
-//            }
-
             for (int l = 0; l < holder.length; l++) {
                 a[a.length-1 - l] = holder[l];
             }
