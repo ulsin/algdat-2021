@@ -393,7 +393,37 @@ public class Oblig1 {
     }
 
     public static boolean inneholdt(String a, String b) {
-        throw new UnsupportedOperationException();
+        if (a.length() == 0) {
+            return true;
+        } else if (b.length() == 0) { // if a isn't zero and b is, then it has to be false
+            return false;
+        }
+        HashMap<Character, Integer> mapA = new HashMap<Character, Integer>();
+        HashMap<Character, Integer> mapB = new HashMap<Character, Integer>();
+
+        // counting up all the chars in first string
+        for (int i = 0; i < a.length(); i++) {
+            mapA.put(a.charAt(i), mapA.getOrDefault(a.charAt(i), 0) + 1);
+        }
+
+        // counting up the letters in the b string
+        for (int j = 0; j < b.length(); j++) {
+            mapB.put(b.charAt(j), mapB.getOrDefault(b.charAt(j), 0) + 1);
+        }
+
+        boolean holder = true;
+        for (char c : mapA.keySet()) {
+            int x = mapA.getOrDefault(c, 0);
+            int y = mapB.getOrDefault(c, 0);
+
+            holder = x <= y;
+
+            if (!holder) {
+                return false;
+            }
+        }
+
+        return holder;
     }
 
     /* This code was taken from the compendium chapter 1.1 - 1.3 by Ulrik for reuse in task 8 */
