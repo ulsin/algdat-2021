@@ -189,9 +189,10 @@ public class Oblig1 {
 
         if (k == 1) {
             rotasjon(a);
+            return;
         }
 
-        System.out.println("Original k:" + k);
+//        System.out.println("Original k:" + k);
 
         // If tests to set k to a more sensible value
         if (k != 0 && (k > a.length || k < - a.length)) {
@@ -206,30 +207,53 @@ public class Oblig1 {
             k = -(-a.length - k);
         }
 
-        System.out.println("a.lenght: " + a.length + "\nk: " + k);
+//        System.out.println("a.lenght: " + a.length + "\nk: " + k);
 
-        String holder = ""; // change this to be a helper char array?
+//        String holder = ""; // change this to be a helper char array?
+
+        char[] holder = new char[Math.abs(k)];
+
         if (k > 0) {
-            for (int i = a.length - 1; i > a.length - 1 - k; i--) {
-                holder += a[i];
+            for (int i = 0; i < holder.length; i++) {
+                holder[i] = a[a.length - holder.length + i]; //
             }
 
             //TODO forward rotation with one big jump, then inserting holder string at begining
+            // pulls everything up k index
+            for (int j = a.length-1; j >= k; j--) {
+                a[j] = a[j-k];
+            }
+
+            for (int l = 0; l < k; l++) {
+                a[l] = holder[l];
+            }
+
         } else {
             for (int i = 0; i < -k; i++) {
-                holder += a[i];
+                holder[i] = a[i];
             }
 
             //TODO backwards rotation with one big jump, then inserting holder string at the end
+            for (int i = 0; i < -k; i++) {
+                a[i] = a[i+(-k)];
+            }
+
+//            for (int l = 0; l < k; l++) {
+//                a[a.length - 1 - l] = holder[l];
+//            }
+
+            for (int l = 0; l < holder.length; l++) {
+                a[a.length-1 - l] = holder[l];
+            }
         }
 
-        System.out.println(holder);
+//        System.out.println(holder);
 
 
-        // old attempt that does not work
-        for (int i = 0; i < k; i++) {
-            rotasjon(a);
-        }
+//        // old attempt that does not work
+//        for (int i = 0; i < k; i++) {
+//            rotasjon(a);
+//        }
     }
 
     ///// Oppgave 7 //////////////////////////////////////
