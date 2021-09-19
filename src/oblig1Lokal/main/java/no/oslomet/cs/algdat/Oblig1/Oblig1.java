@@ -268,7 +268,27 @@ public class Oblig1 {
         // or!!!!!!
         // Use if tests within a loop, to make them see if the counter is higher than length, then at last append the rest of the longest string
         // So do a max method thingy to find the length of the longest string an then use that one to append the last
-        throw new UnsupportedOperationException();
+
+        int maxLength = 0;
+        String ut = "";
+
+        // finding length of longest string
+        for (int i = 0; i < s.length; i++) {
+            if (s[i].length() > maxLength) {
+                maxLength = s[i].length();
+            }
+        }
+
+        for (int j = 0; j < maxLength; j++) {
+            for (int k = 0; k < s.length; k++) {
+                if (s[k].length() > j) {
+                    ut += s[k].charAt(j);
+                }
+            }
+        }
+
+        return ut;
+
     }
 
     ///// Oppgave 8 //////////////////////////////////////
