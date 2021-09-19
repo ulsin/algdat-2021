@@ -192,8 +192,6 @@ public class Oblig1 {
             return;
         }
 
-//        System.out.println("Original k:" + k);
-
         // If tests to set k to a more sensible value
         if (k != 0 && (k > a.length || k < - a.length)) {
             k = k % a.length; // sets k to just be the remainder of every rotation
@@ -207,10 +205,6 @@ public class Oblig1 {
             k = -(-a.length - k);
         }
 
-//        System.out.println("a.lenght: " + a.length + "\nk: " + k);
-
-//        String holder = ""; // change this to be a helper char array?
-
         char[] holder = new char[Math.abs(k)];
 
         if (k > 0) {
@@ -218,7 +212,7 @@ public class Oblig1 {
                 holder[i] = a[a.length - holder.length + i]; //
             }
 
-            //TODO forward rotation with one big jump, then inserting holder string at begining
+            //forward rotation with one big jump, then inserting holder string at begining
             // pulls everything up k index
             for (int j = a.length-1; j >= k; j--) {
                 a[j] = a[j-k];
@@ -233,7 +227,7 @@ public class Oblig1 {
                 holder[i] = a[i];
             }
 
-            //TODO backwards rotation with one big jump, then inserting holder string at the end
+            //backwards rotation with one big jump, then inserting holder string at the end
             for (int i = 0; i < -k; i++) {
                 a[i] = a[i+(-k)];
             }
@@ -242,24 +236,38 @@ public class Oblig1 {
                 a[a.length-1 - l] = holder[l];
             }
         }
-
-//        System.out.println(holder);
-
-
-//        // old attempt that does not work
-//        for (int i = 0; i < k; i++) {
-//            rotasjon(a);
-//        }
     }
 
     ///// Oppgave 7 //////////////////////////////////////
     /// 7a)
     public static String flett(String s, String t) {
-        throw new UnsupportedOperationException();
+        String ut = "";
+
+        int i = 0;
+
+        // mergeges strings untill end of shortest string
+        for (; i < s.length() && i < t.length(); i++) {
+            ut += s.charAt(i) + "" + t.charAt(i);
+        }
+
+        // appends the rest of the longest string, by carrying the i variable out of the for scope
+        if (s.length() > t.length()) {
+            ut += s.substring(i);
+        } else if (s.length() < t.length()) {
+            ut += t.substring(i);
+        }
+
+        return ut;
     }
 
     /// 7b)
     public static String flett(String... s) {
+        //TODO
+        // Find lenght of shortest string
+        // use shortest length in for loop, then
+        // or!!!!!!
+        // Use if tests within a loop, to make them see if the counter is higher than length, then at last append the rest of the longest string
+        // So do a max method thingy to find the length of the longest string an then use that one to append the last
         throw new UnsupportedOperationException();
     }
 
