@@ -134,12 +134,20 @@ Se hvilket tall utskriften gir. Bytt så ut A og B med andre bokstaver, og se om
 # Oppgaver til Avsnitt 1.4.4
   1. 	Kopier class Heltall fra Programkode 1.4.4 a) over til deg selv. Opprett mappen (package) eksempelklasser og legg den der.
     	a) Lag og kjør et program med Programkode 1.4.4 c).
+    	```java
+    	[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    	```
     	b) Bruk Programkode 1.4.4 b) i compareTo-metoden. Sjekk at alt virker som før!
+    	- funker fortsatt
     	c) La  return verdi - h.verdi;  være kode i compareTo-metoden. Matematisk sett blir det korrekt. Sjekk at alt virker som før. Det er imidlertid et problem her. Hva er det?
+    	- Ser ikke ut som at noe annet printes, men er jo et problem at den returner verdier utenfor -1, 0 , 1
 
 
   d) Heltall x = new Heltall(3), y = new Heltall(3);  // x og y er like
      System.out.println(x.compareTo(y) + "  " + x.equals(y));
+     ```java
+        0  true
+     ```
 
   Lag et program som inneholder koden over. Hva blir utskriften? Kommenter så vekk equals-metoden i class Heltall. Da vil det bli den versjonen av equals som arves fra class Object, som brukes. Hva blir nå utskriften? Slå opp i kildekoden til class Object og se hvordan metoden equals er kodet der.
 
@@ -147,15 +155,86 @@ Se hvilket tall utskriften gir. Bytt så ut A og B med andre bokstaver, og se om
   e) Heltall x = new Heltall(3), y = new Heltall(3);  // x og y er like
      System.out.println(x.hashCode() + "  " + y.hashCode());
 
+
   Lag et program som inneholder koden over. Hva blir utskriften? Kommenter så vekk hashCode-metoden i class Heltall. Da vil det bli den versjonen av hashCode som arves fra class Object, som brukes. Hva blir nå utskriften? Slå opp i kildekoden til class Object og se hva som står der om metoden hashCode.
+       ```java
+          Med metoden
+          34  34
+
+          utkommentert hashCode metode
+          905544614  2137589296
+       ```
+
+
   2. 	Kopier klassen Person fra Programkode 1.4.4 d) over til deg. Legg den under package eksempelklasser:
-    	a) Legg inn flere personer i Person-tabellen i Programkode 1.4.4 e).
-    	b) Kjør Programkode 1.4.4 e) etter at du har gjort som i a).
-    	c) Bruk sort-metoden fra class Arrays i Programkode 1.4.4 e).
-    	d) Legg inn kode i konstruktøren slik at det kastes en NullPointerException hvis fornavn eller etternavn er null. Ta med en tekst som forteller hvilket navn som er null.
-    	e) Lag en mer direkte versjon av metoden equals(), dvs. uten å bruke compareTo(). Bruk også getClass() != o.getClass() istedenfor !(o instanceof Person). Men da må det først være kode som returnerer false hvis o er null. Hvis ikke, vil o.getClass() kaste en NullPointerException.
-    	f) Lag metoden public boolean equals(Person p). Da trengs ingen typesjekking.
-    	g) Metoden hashCode() i klassen Person kan kodes på mange måter. Hvis equals() er kodet, men ikke hashCode(), vil f.eks. NetBeans og Eclipse si ifra og samtidig komme med forslag om hvordan hashCode() skal kodes. Sjekk dette. Obs: I NetBeans er dette en del av standardoppsettet. I Eclipse må du selv sette det som en opsjon. Men du får tilbudet i menyvalget Source. Hash-teknikk blir tatt opp mer grundig i Kapittel 6.
-    	h) I metoden toString i klassen Person skjøtes fornavn, et mellomrom og etternavn sammen. Dette kan også gjøres ved hjelp av metoden join i klassen String. Prøv på det!
-    	i) Legg Programkode 1.4.4 f) bakerst i Programkode 1.4.4 e). Kjør programmet!
-    	j) Programkode 1.4.4 f) inneholder tre programlinjer. Gjør det om slik at det blir kun én programlinje.
+
+a) Legg inn flere personer i Person-tabellen i Programkode 1.4.4 e).
+- ye boi
+
+b) Kjør Programkode 1.4.4 e) etter at du har gjort som i a).
+```java
+Utskrft:
+Boris Zukanovic er størst
+[Ali Kahn, Kari Pettersen, Kari Svendsen, Azra Zukanovic, Boris Zukanovic]
+```
+
+
+c) Bruk sort-metoden fra class Arrays i Programkode 1.4.4 e).
+```java
+    Arrays.sort(p);
+    Utskrift:
+    Boris Zukanovic er størst
+    [Ali Kahn, Kari Pettersen, Kari Svendsen, Azra Zukanovic, Boris Zukanovic]
+```
+ser ut som at den funker ganske likt
+
+d) Legg inn kode i konstruktøren slik at det kastes en NullPointerException hvis fornavn eller etternavn er null. Ta med en tekst som forteller hvilket navn som er null.
+
+```java
+    public Person(String fornavn, String etternavn)   // konstruktør
+    {
+        if (fornavn == null) {
+            throw new NullPointerException("Fornvn kan ikke være null");
+        }
+        if (etternavn == null) {
+            throw new NullPointerException("Etternavn kan ikke være null");
+        }
+
+        this.fornavn = fornavn;
+        this.etternavn = etternavn;
+    }
+```
+
+e) Lag en mer direkte versjon av metoden equals(), dvs. uten å bruke compareTo(). Bruk også getClass() != o.getClass() istedenfor !(o instanceof Person). Men da må det først være kode som returnerer false hvis o er null. Hvis ikke, vil o.getClass() kaste en NullPointerException.
+f) Lag metoden public boolean equals(Person p). Da trengs ingen typesjekking.
+
+```java
+    public boolean equals(Person p) {
+        if (p == null) {
+            throw new NullPointerException("Person can't be zero");
+        }
+
+        return getClass() != p.getClass();
+    }
+```
+
+g) Metoden hashCode() i klassen Person kan kodes på mange måter. Hvis equals() er kodet, men ikke hashCode(), vil f.eks. NetBeans og Eclipse si ifra og samtidig komme med forslag om hvordan hashCode() skal kodes. Sjekk dette. Obs: I NetBeans er dette en del av standardoppsettet. I Eclipse må du selv sette det som en opsjon. Men du får tilbudet i menyvalget Source. Hash-teknikk blir tatt opp mer grundig i Kapittel 6.
+- Nothing happens in intellij
+
+h) I metoden toString i klassen Person skjøtes fornavn, et mellomrom og etternavn sammen. Dette kan også gjøres ved hjelp av metoden join i klassen String. Prøv på det!
+```java
+
+    public String toString() { return String.join(" ", fornavn, etternavn); }
+
+Boris Zukanovic er størst
+[Ali Kahn, Kari Pettersen, Kari Svendsen, Azra Zukanovic, Boris Zukanovic]
+```
+
+i) Legg Programkode 1.4.4 f) bakerst i Programkode 1.4.4 e). Kjør programmet!
+Boris Zukanovic
+
+j) Programkode 1.4.4 f) inneholder tre programlinjer. Gjør det om slik at det blir kun én programlinje.
+
+```java
+        Arrays.stream(p).max(Comparator.naturalOrder()).ifPresent(System.out::println);
+```

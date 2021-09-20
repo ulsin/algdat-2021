@@ -720,5 +720,4 @@ public class Tabell {
 
         return b;
     }
-
 }
