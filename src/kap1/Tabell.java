@@ -10,14 +10,16 @@ public class Tabell {
     }
 
     // From chapter 1.2
-    public static void bytt(int[] a, int i, int j)
-    {
-        int temp = a[i]; a[i] = a[j]; a[j] = temp;
+    public static void bytt(int[] a, int i, int j) {
+        int temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
     }
 
-    public static void bytt(char[] c, int i, int j)
-    {
-        char temp = c[i]; c[i] = c[j]; c[j] = temp;
+    public static void bytt(char[] c, int i, int j) {
+        char temp = c[i];
+        c[i] = c[j];
+        c[j] = temp;
     }
 
     public static void skriv(int[] a, int fra, int til) {
@@ -94,7 +96,7 @@ public class Tabell {
         }
 
         int[] retArr = new int[n];
-        for (int i = 0; i < retArr.length;) {
+        for (int i = 0; i < retArr.length; ) {
             retArr[i] = ++i;
         }
         return retArr;
@@ -108,15 +110,14 @@ public class Tabell {
             return new int[0];
         }
 
-        int[] retArr = new int[til-fra];
-        for (int i = 0; i < retArr.length;) {
+        int[] retArr = new int[til - fra];
+        for (int i = 0; i < retArr.length; ) {
             retArr[i] = i++ + fra;
         }
         return retArr;
     }
 
-    public static void fratilKontroll(int tablengde, int fra, int til)
-    {
+    public static void fratilKontroll(int tablengde, int fra, int til) {
         if (fra < 0)                                  // fra er negativ
             throw new ArrayIndexOutOfBoundsException
                     ("fra(" + fra + ") er negativ!");
@@ -130,8 +131,7 @@ public class Tabell {
                     ("fra(" + fra + ") > til(" + til + ") - illegalt intervall!");
     }
 
-    public static void vhKontroll(int tablengde, int v, int h)
-    {
+    public static void vhKontroll(int tablengde, int v, int h) {
         if (v < 0)
             throw new ArrayIndexOutOfBoundsException("v(" + v + ") < 0");
 
@@ -153,8 +153,8 @@ public class Tabell {
 
         for (int k = n - 1; k > 0; k--)  // løkke som går n - 1 ganger
         {
-            int i = r.nextInt(k+1);        // en tilfeldig tall fra 0 til k
-            bytt(a,k,i);                   // bytter om
+            int i = r.nextInt(k + 1);        // en tilfeldig tall fra 0 til k
+            bytt(a, k, i);                   // bytter om
         }
 
         return a;                        // permutasjonen returneres
@@ -164,15 +164,13 @@ public class Tabell {
     {
         Random r = new Random();     // en randomgenerator
 
-        for (int k = a.length - 1; k > 0; k--)
-        {
+        for (int k = a.length - 1; k > 0; k--) {
             int i = r.nextInt(k + 1);  // tilfeldig tall fra [0,k]
-            bytt(a,k,i);
+            bytt(a, k, i);
         }
     }
 
-    public static int maks(int[] a, int fra, int til)
-    {
+    public static int maks(int[] a, int fra, int til) {
         fratilKontroll(a.length, fra, til);
 
         if (fra == til)
@@ -186,10 +184,8 @@ public class Tabell {
         int m = fra;              // indeks til største verdi i a[fra:til>
         int maksverdi = a[fra];   // største verdi i a[fra:til>
 
-        for (int i = fra + 1; i < til; i++)
-        {
-            if (a[i] > maksverdi)
-            {
+        for (int i = fra + 1; i < til; i++) {
+            if (a[i] > maksverdi) {
                 m = i;                // indeks til største verdi oppdateres
                 maksverdi = a[m];     // største verdi oppdateres
             }
@@ -201,12 +197,11 @@ public class Tabell {
     // overloader så man kan kjøre med bare en input
     public static int maks(int[] a)  // bruker hele tabellen
     {
-        return maks(a,0,a.length);     // kaller metoden over
+        return maks(a, 0, a.length);     // kaller metoden over
     }
 
     public static int min(int[] a, int fra, int til) {
-        if (fra < 0 || til > a.length || fra >= til)
-        {
+        if (fra < 0 || til > a.length || fra >= til) {
             throw new IllegalArgumentException("Illegalt intervall!");
         }
 
@@ -242,9 +237,7 @@ public class Tabell {
                 {
                     a[sist] = temp;          // legger siste verdi tilbake
                     return temp >= maksverdi ? sist : m;   // er siste størst?
-                }
-                else
-                {
+                } else {
                     maksverdi = a[i];        // maksverdi oppdateres
                     m = i;                   // m oppdateres
                 }
@@ -275,7 +268,7 @@ public class Tabell {
 
         bytt(a, n - 1, m); // bytter tilbake
 
-        return new int[] {m,nm};      // m i posisjon 0 , nm i posisjon 1
+        return new int[]{m, nm};      // m i posisjon 0 , nm i posisjon 1
 
     } // nestMaks
 
@@ -293,30 +286,32 @@ public class Tabell {
         if (n < 2) // må ha minst to verdier!
             throw new IllegalArgumentException("a.length(" + n + ") < 2!");
 
-        int[] b = new int[2*n];          // turneringstreet
-        System.arraycopy(a,0,b,n,n);     // legger a bakerst i b
+        int[] b = new int[2 * n];          // turneringstreet
+        System.arraycopy(a, 0, b, n, n);     // legger a bakerst i b
 
-        for (int k = 2*n-2; k > 1; k -= 2)   // lager turneringstreet
-            b[k/2] = Math.max(b[k],b[k+1]);
+        for (int k = 2 * n - 2; k > 1; k -= 2)   // lager turneringstreet
+            b[k / 2] = Math.max(b[k], b[k + 1]);
 
         int maksverdi = b[1], nestmaksverdi = Integer.MIN_VALUE;
 
-        for (int m = 2*n - 1, k = 2; k < m; k *= 2)
-        {
-            int tempverdi = b[k+1];  // ok hvis maksverdi er b[k]
-            if (maksverdi != b[k]) { tempverdi = b[k]; k++; }
+        for (int m = 2 * n - 1, k = 2; k < m; k *= 2) {
+            int tempverdi = b[k + 1];  // ok hvis maksverdi er b[k]
+            if (maksverdi != b[k]) {
+                tempverdi = b[k];
+                k++;
+            }
             if (tempverdi > nestmaksverdi) nestmaksverdi = tempverdi;
         }
 
         System.out.println(Arrays.toString(b));
 
-        return new int[] {maksverdi,nestmaksverdi}; // størst og nest størst
+        return new int[]{maksverdi, nestmaksverdi}; // størst og nest størst
 
     } // nestMaks
 
     // From chapter 1.3 instructions, just made it myself haha sorta works
     // Takes an array in and turns it into the lower permutation lexicographically
-    public static void lowerPerm(int[] a){
+    public static void lowerPerm(int[] a) {
         int minIndex = a.length - 1;
         int minVal = a[minIndex];
         for (int i = a.length - 2; i >= 0; i--) {
@@ -326,7 +321,7 @@ public class Tabell {
             }
             if (a[i] > minVal) { // if a[i] is larger than the current minval, then it needs to be swapped
                 bytt(a, minIndex, i);
-                snu(a, i+1);
+                snu(a, i + 1);
                 break;
             }
         }
@@ -349,15 +344,15 @@ public class Tabell {
     }
 
     //     Programkode 1.3.1 b)
-    public static boolean nestePermutasjon(int[] a)
-    {
+    public static boolean nestePermutasjon(int[] a) {
         int i = a.length - 2;                    // i starter nest bakerst
         while (i >= 0 && a[i] > a[i + 1]) i--;   // går mot venstre
         if (i < 0) return false;                 // a = {n, n-1, . . . , 2, 1}
 
         int j = a.length - 1;                    // j starter bakerst
         while (a[j] < a[i]) j--;                 // stopper når a[j] > a[i]
-        bytt(a,i,j); snu(a,i + 1);               // bytter og snur
+        bytt(a, i, j);
+        snu(a, i + 1);               // bytter og snur
 
         return true;                             // en ny permutasjon
     }
@@ -380,8 +375,7 @@ public class Tabell {
     }
 
     //    Programkode 1.3.4 a)
-    public static void utvalgssortering(int[] a)
-    {
+    public static void utvalgssortering(int[] a) {
         for (int i = 0; i < a.length - 1; i++)
             bytt(a, i, min(a, i, a.length));  // to hjelpemetoder
     }
@@ -424,10 +418,11 @@ public class Tabell {
     //     Programkode 1.3.5 b)
     public static int lineærsøk(int[] a, int verdi) // legges i class Tabell
     {
-        if (a.length == 0 || verdi > a[a.length-1])
+        if (a.length == 0 || verdi > a[a.length - 1])
             return -(a.length + 1);  // verdi er større enn den største
 
-        int i = 0; for( ; a[i] < verdi; i++);  // siste verdi er vaktpost
+        int i = 0;
+        for (; a[i] < verdi; i++) ;  // siste verdi er vaktpost
 
         return verdi == a[i] ? i : -(i + 1);   // sjekker innholdet i a[i]
     }
@@ -435,10 +430,11 @@ public class Tabell {
     //oppgave 1.3.5.4
     public static int lineærsøkReverse(int[] a, int verdi) // legges i class Tabell
     {
-        if (a.length == 0 || verdi > a[a.length-1])
+        if (a.length == 0 || verdi > a[a.length - 1])
             return -(a.length + 1);  // verdi er større enn den største
 
-        int i = a.length - 1; for( ; i > 0; i--);  // siste verdi er vaktpost
+        int i = a.length - 1;
+        for (; i > 0; i--) ;  // siste verdi er vaktpost
 
         return verdi == a[i] ? i : -(i + 1);   // sjekker innholdet i a[i]
     }
@@ -446,14 +442,14 @@ public class Tabell {
     //oppgave 1.3.5.5a
     public static int lineærsøkHopp(int[] a, int k, int verdi) // legges i class Tabell
     {
-        if (a.length == 0 || verdi > a[a.length-1])
+        if (a.length == 0 || verdi > a[a.length - 1])
             return -(a.length + 1);  // verdi er større enn den største
 
         int i = 0;
         for (; a[i] < verdi; i += k) {
             if (a[i] > verdi) {
                 i -= k;
-                for (; i < verdi; i++);
+                for (; i < verdi; i++) ;
             }
         }
         return verdi == a[i] ? i : -(i + 1);   // sjekker innholdet i a[i]
@@ -466,19 +462,18 @@ public class Tabell {
     }
 
     //     Programkode 1.3.6 a)
-    public static int binærsøk1(int[] a, int fra, int til, int verdi)
-    {
-        Tabell.fratilKontroll(a.length,fra,til);  // se Programkode 1.2.3 a)
+    public static int binærsøk1(int[] a, int fra, int til, int verdi) {
+        Tabell.fratilKontroll(a.length, fra, til);  // se Programkode 1.2.3 a)
         int v = fra, h = til - 1;  // v og h er intervallets endepunkter
 
         while (v <= h)    // fortsetter så lenge som a[v:h] ikke er tom
         {
-            int m = (v + h)/2;      // heltallsdivisjon - finner midten
+            int m = (v + h) / 2;      // heltallsdivisjon - finner midten
             int midtverdi = a[m];   // hjelpevariabel for midtverdien
 
             if (verdi == midtverdi) return m;          // funnet
             else if (verdi > midtverdi) v = m + 1;     // verdi i a[m+1:h]
-            else  h = m - 1;                           // verdi i a[v:m-1]
+            else h = m - 1;                           // verdi i a[v:m-1]
         }
 
         return -(v + 1);    // ikke funnet, v er relativt innsettingspunkt
@@ -486,54 +481,50 @@ public class Tabell {
 
     public static int binærsøk1(int[] a, int verdi)  // søker i hele a
     {
-        return binærsøk1(a,0,a.length,verdi);  // bruker metoden over
+        return binærsøk1(a, 0, a.length, verdi);  // bruker metoden over
     }
 
     // 3. versjon av binærsøk - returverdier som for Programkode 1.3.6 a)
-    public static int binærsøk3(int[] a, int fra, int til, int verdi)
-    {
-        Tabell.fratilKontroll(a.length,fra,til);  // se Programkode 1.2.3 a)
+    public static int binærsøk3(int[] a, int fra, int til, int verdi) {
+        Tabell.fratilKontroll(a.length, fra, til);  // se Programkode 1.2.3 a)
         int v = fra, h = til - 1;  // v og h er intervallets endepunkter
 
         while (v < h)  // obs. må ha v < h her og ikke v <= h
         {
-            int m = (v + h)/2;  // heltallsdivisjon - finner midten
+            int m = (v + h) / 2;  // heltallsdivisjon - finner midten
 
             if (verdi > a[m]) v = m + 1;   // verdi må ligge i a[m+1:h]
-            else  h = m;                   // verdi må ligge i a[v:m]
+            else h = m;                   // verdi må ligge i a[v:m]
         }
         if (h < v || verdi < a[v]) return -(v + 1);  // ikke funnet
         else if (verdi == a[v]) return v;            // funnet
-        else  return -(v + 2);                       // ikke funnet
+        else return -(v + 2);                       // ikke funnet
     }
 
     public static int binærsøk3(int[] a, int verdi)  // søker i hele a
     {
-        return binærsøk3(a,0,a.length,verdi);  // bruker metoden over
+        return binærsøk3(a, 0, a.length, verdi);  // bruker metoden over
     }
 
     //    Programkode 1.3.8 c)
-    public static void innsettingssortering(int[] a, int fra, int til)
-    {
+    public static void innsettingssortering(int[] a, int fra, int til) {
         for (int i = fra; i < til; i++)  // starter med i = 1
         {
             int verdi = a[i], j = i - 1;      // verdi er et tabellelemnet, j er en indeks
-            for (; j >= 0 && verdi < a[j]; j--) a[j+1] = a[j];  // sammenligner og flytter
+            for (; j >= 0 && verdi < a[j]; j--) a[j + 1] = a[j];  // sammenligner og flytter
             a[j + 1] = verdi;                 // j + 1 er rett sortert plass
         }
     }
 
     public static void innsettingssortering(int[] a) {
-        innsettingssortering(a,0, a.length);
+        innsettingssortering(a, 0, a.length);
     }
 
     // Programkode 1.3.8 f)
-    public static void shell(int[] a, int k)
-    {
-        for (int i = k; i < a.length; i++)
-        {
+    public static void shell(int[] a, int k) {
+        for (int i = k; i < a.length; i++) {
             int temp = a[i], j = i - k;
-            for ( ; j >= 0 && temp < a[j]; j -= k) a[j + k] = a[j];
+            for (; j >= 0 && temp < a[j]; j -= k) a[j + k] = a[j];
             a[j + k] = temp;
         }
     }
@@ -542,21 +533,20 @@ public class Tabell {
     public static boolean erSortert(int[] a)  // legges i samleklassen Tabell
     {
         for (int i = 1; i < a.length; i++)      // starter med i = 1
-            if (a[i-1] > a[i]) return false;      // en inversjon
+            if (a[i - 1] > a[i]) return false;      // en inversjon
 
         return true;
     }
 
     // Programkode 1.3.9 a)
-    private static int parter0(int[] a, int v, int h, int skilleverdi)
-    {
+    private static int parter0(int[] a, int v, int h, int skilleverdi) {
         while (true)                                  // stopper når v > h
         {
             while (v <= h && a[v] < skilleverdi) v++;   // h er stoppverdi for v
             while (v <= h && a[h] >= skilleverdi) h--;  // v er stoppverdi for h
 
-            if (v < h) bytt(a,v++,h--);                 // bytter om a[v] og a[h]
-            else  return v;  // a[v] er nåden første som ikke er mindre enn skilleverdi
+            if (v < h) bytt(a, v++, h--);                 // bytter om a[v] og a[h]
+            else return v;  // a[v] er nåden første som ikke er mindre enn skilleverdi
         }
     }
 
@@ -570,8 +560,7 @@ public class Tabell {
 
 
     //    Programkode 1.3.9 f)
-    private static int sParter0(int[] a, int v, int h, int indeks)
-    {
+    private static int sParter0(int[] a, int v, int h, int indeks) {
         bytt(a, indeks, h);           // skilleverdi a[indeks] flyttes bakerst
         int pos = parter0(a, v, h - 1, a[h]);  // partisjonerer a[v:h - 1]
         bytt(a, pos, h);              // bytter for å få skilleverdien på rett plass
@@ -582,7 +571,7 @@ public class Tabell {
     private static void kvikksortering0(int[] a, int v, int h)  // en privat metode
     {
         if (v >= h) return;  // a[v:h] er tomt eller har maks ett element
-        int k = sParter0(a, v, h, (v + h)/2);  // bruker midtverdien
+        int k = sParter0(a, v, h, (v + h) / 2);  // bruker midtverdien
         kvikksortering0(a, v, k - 1);     // sorterer intervallet a[v:k-1]
         kvikksortering0(a, k + 1, h);     // sorterer intervallet a[k+1:h]
     }
@@ -598,5 +587,138 @@ public class Tabell {
         kvikksortering0(a, 0, a.length - 1);
     }
 
+    //     Programkode 1.4.1 a)
+    public static int maks(double[] a)     // legges i class Tabell
+    {
+        int m = 0;                           // indeks til største verdi
+        double maksverdi = a[0];             // største verdi
+
+        for (int i = 1; i < a.length; i++)
+            if (a[i] > maksverdi) {
+                maksverdi = a[i];     // største verdi oppdateres
+                m = i;                // indeks til største verdi oppdaters
+            }
+        return m;     // returnerer posisjonen til største verdi
+    }
+
+    //    public static int maks(String[] a)    // legges i class Tabell
+//    {
+//        int m = 0;                          // indeks til største verdi
+//        String maksverdi = a[0];            // største verdi
+//
+//        for (int i = 1; i < a.length; i++) if (a[i].compareTo(maksverdi) > 0)
+//        {
+//            maksverdi = a[i];  // største verdi oppdateres
+//            m = i;             // indeks til største verdi oppdaters
+//        }
+//        return m;  // returnerer posisjonen til største verdi
+//    }
+////    Programkode 1.4.1 b)
+//
+    //     task 1.4.1.2
+    public static int maks(char[] a)     // legges i class Tabell
+    {
+        int m = 0;                           // indeks til største verdi
+        char maksverdi = a[0];             // største verdi
+
+        for (int i = 1; i < a.length; i++)
+            if (a[i] > maksverdi) {
+                maksverdi = a[i];     // største verdi oppdateres
+                m = i;                // indeks til største verdi oppdaters
+            }
+        return m;     // returnerer posisjonen til største verdi
+    }
+//
+//    //     task 1.4.1.3
+//    public static int maks(Integer[] a)     // legges i class Tabell
+//    {
+//        int m = 0;                           // indeks til største verdi
+//        Integer maksverdi = a[0];             // største verdi
+//
+//        for (int i = 1; i < a.length; i++) if (a[i] > maksverdi)
+//        {
+//            maksverdi = a[i];     // største verdi oppdateres
+//            m = i;                // indeks til største verdi oppdaters
+//        }
+//        return m;     // returnerer posisjonen til største verdi
+//    }
+
+    public static <T extends Comparable<? super T>> int maks(T[] a) {
+        int m = 0;                     // indeks til største verdi
+        T maksverdi = a[0];            // største verdi
+
+        for (int i = 1; i < a.length; i++)
+            if (a[i].compareTo(maksverdi) > 0) {
+                maksverdi = a[i];  // største verdi oppdateres
+                m = i;             // indeks til største verdi oppdaters
+            }
+        return m;  // returnerer posisjonen til største verdi
+    } // maks
+//    Programkode 1.4.2 b)
+
+    public static <T extends Comparable<? super T>> void innsettingssortering(T[] a) {
+        for (int i = 1; i < a.length; i++)  // starter med i = 1
+        {
+            T verdi = a[i];        // verdi er et tabellelemnet
+            int j = i - 1;        // j er en indeks
+            // sammenligner og forskyver:
+            for (; j >= 0 && verdi.compareTo(a[j]) < 0; j--) a[j + 1] = a[j];
+
+            a[j + 1] = verdi;      // j + 1 er rett sortert plass
+        }
+    }
+//    Programkode 1.4.2 e)
+
+    // Task 1.4.3.5
+    public static void skriv(Object[] a, int fra, int til) {
+        for (int i = 0; i < a.length; i++) {
+            System.out.print(a[i] + " ");
+        }
+    }
+
+    public static void skriv(Object[] a) {
+        skriv(a, 0, a.length);
+    }
+
+    public static void skrivln(Object[] a, int fra, int til) {
+        for (int i = 0; i < a.length; i++) {
+            System.out.print(a[i] + " ");
+        }
+        System.out.print("\n");
+    }
+
+    public static void skrivln(Object[] a) {
+        skrivln(a, 0, a.length);
+    }
+
+    public static void bytt(Object[] a, int i, int j) {
+        Object temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+
+    public static Integer[] randPermInteger(int n) {
+        Integer[] a = new Integer[n];               // en Integer-tabell
+        Arrays.setAll(a, i -> i + 1);               // tallene fra 1 til n
+
+        Random r = new Random();   // hentes fra  java.util
+
+        for (int k = n - 1; k > 0; k--) {
+            int i = r.nextInt(k + 1);  // tilfeldig tall fra [0,k]
+            bytt(a, k, i);             // bytter om
+        }
+        return a;  // tabellen med permutasjonen returneres
+    }
+//    Programkode 1.4.3 d)
+
+    // Task 1.4.3.7
+    public static Double[] convertetPrimDouble(double[] d) {
+
+        Double[] b = new Double[d.length];             // en tom Integer-tabell
+
+        for (int i = 0; i < b.length; i++) b[i] = d[i];  // fyller tabellen (autoboksing)
+
+        return b;
+    }
 
 }
