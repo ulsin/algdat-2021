@@ -1,8 +1,7 @@
 package kap1.del4;
 
 import kap1.Tabell;
-import kap1.eksempelklasser.Heltall;
-import kap1.eksempelklasser.Person;
+import kap1.eksempelklasser.*;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -104,8 +103,87 @@ public class Kap1Del4 {
 
 //        Programkode 1.4.4 e)
 
-        Arrays.stream(p).max(Comparator.naturalOrder()).ifPresent(System.out::println);
+            Arrays.stream(p).max(Comparator.naturalOrder()).ifPresent(System.out::println);
 
 //        Programkode 1.4.4 f)
+
+        for (Studium stud : Studium.values())
+        {
+            System.out.println(stud.toString() + " (" + stud.name() + ")");
+        }
+        // Ingeniørfag - data (Data)
+        // Informasjonsteknologi (IT)
+        // Anvendt datateknologi (Anvendt)
+        // Enkeltemnestudent (Enkeltemne)
+
+//        Programkode 1.4.5 b)
+
+        Student[] st = new Student[6];  // en Studenttabell
+
+        st[0] = new Student("Kari", "Svendsen", Studium.Data);    // Kari Svendsen
+        st[1] = new Student("Boris", "Zukanovic", Studium.IT);    // Boris Zukanovic
+        st[2] = new Student("Ali", "Kahn", Studium.Anvendt);      // Ali Kahn
+        st[3] = new Student("Azra", "Zukanovic", Studium.IT);     // Azra Zukanovic
+        st[4] = new Student("Azra", "Zukanovic", Studium.Elektro);     // Azra Zukanovic
+        st[5] = new Student("Kari", "Pettersen", Studium.Data);   // Kari Pettersen
+
+        Tabell.innsettingssortering(st);                     // Programkode 1.4.2 e)
+        for (Student tt : st) System.out.println(tt);
+
+        // Utskrift:
+        // Ali Kahn Anvendt
+        // Kari Pettersen Data
+        // Kari Svendsen Data
+        // Azra Zukanovic IT
+        // Boris Zukanovic IT
+
+//        Programkode 1.4.5 d)
+
+        Person[] p5 = new Person[5];                       // en persontabell
+        p5[0] = new Person("Kari", "Svendsen");            // Kari Svendsen
+        p5[1] = new Person("Boris", "Zukanovic");          // Boris Zukanovic
+        p5[2] = new Person("Ali", "Kahn");                 // Ali Kahn
+        p5[3] = new Person("Azra", "Zukanovic");           // Azra Zukanovic
+        p5[4] = new Person("Kari", "Pettersen");           // Kari Pettersen
+
+        class FornavnKomparator implements Komparator<Person>
+        {
+            public int compare(Person p1, Person p2)        // to personer
+            {
+                return p1.fornavn().compareTo(p2.fornavn());  // sammenligner fornavn
+            }
+        }
+
+        Komparator<Person> c = new FornavnKomparator();   // en instans av klassen
+        Tabell.innsettingssortering(p5, c);                // se Programkode 1.4.6 b)
+
+        System.out.println(Arrays.toString(p5));           // Utskrift av tabellen p
+        // [Ali Kahn, Azra Zukanovic, Boris Zukanovic, Kari Svendsen, Kari Pettersen]
+
+        Komparator<Person> c22 = (p1,p2) -> p1.fornavn().compareTo(p2.fornavn());
+        Tabell.innsettingssortering(p, c22);                // se Programkode 1.4.6 b)
+        System.out.println(Arrays.toString(p));           // Utskrift av tabellen p
+
+//        Programkode 1.4.6 e)
+
+        Tabell.innsettingssortering(p, (p1,p2) -> p1.fornavn().compareTo(p2.fornavn()));
+        System.out.println(Arrays.toString(p));
+
+//        Programkode 1.4.6 f)
+
+        Student[] s23 = new Student[5];                             // en studenttabell
+        s23[0] = new Student("Kari","Svendsen", Studium.Data);      // Kari Svendsen
+        s23[1] = new Student("Boris","Zukanovic", Studium.IT);      // Boris Zukanovic
+        s23[2] = new Student("Ali","Kahn", Studium.Anvendt);        // Ali Kahn
+        s23[3] = new Student("Azra","Zukanovic", Studium.IT);       // Azra Zukanovic
+        s23[4] = new Student("Kari","Pettersen", Studium.Data);     // Kari Pettersen
+
+        Tabell.innsettingssortering(s23, (s11,s2) -> s11.studium().compareTo(s2.studium()));
+        System.out.println(Arrays.toString(s23));
+
+//        Programkode 1.4.6 g)
+
     }
+//    Programkode 1.4.6 c)
 }
+
