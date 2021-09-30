@@ -4,8 +4,7 @@ package oblig1Lokal.main.java.no.oslomet.cs.algdat.Oblig1;
 
 import kap1.Tabell;
 
-import java.util.HashMap;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class Oblig1 {
     private Oblig1() {}
@@ -72,6 +71,11 @@ public class Oblig1 {
         }
 
         int antUlike = 1;
+        /*
+        Set<Integer> ulike = new HashSet<>();
+        for(int n : a) ulike.add(n);
+        return ulike.size();
+         */
 
         for (int i = 1; i < a.length; i++) {
             boolean holder = true;
@@ -86,6 +90,7 @@ public class Oblig1 {
             }
         }
         return antUlike;
+       // return (int)Arrays.stream(a).distinct().count();
     }
 
     ///// Oppgave 4 //////////////////////////////////////
@@ -244,20 +249,20 @@ public class Oblig1 {
         String ut = "";
 
         int i = 0;
+        StringBuilder sb = new StringBuilder();
 
         // mergeges strings untill end of shortest string
         for (; i < s.length() && i < t.length(); i++) {
-            ut += s.charAt(i) + "" + t.charAt(i);
+            sb.append(s.charAt(i)).append(t.charAt(i));
         }
 
         // appends the rest of the longest string, by carrying the i variable out of the for scope
         if (s.length() > t.length()) {
-            ut += s.substring(i);
+            sb.append(s.substring(i));
         } else if (s.length() < t.length()) {
-            ut += t.substring(i);
+            sb.append(t.substring(i));
         }
-
-        return ut;
+        return sb.toString();
     }
 
     /// 7b)
@@ -271,6 +276,17 @@ public class Oblig1 {
 
         int maxLength = 0;
         String ut = "";
+        StringBuilder sb = new StringBuilder();
+        for(int i = 1;;i++) {
+            boolean flag = false;
+            for(String t : s) {
+                if(t.length() < i) {
+                    sb.append(t.charAt(i-1));
+                    flag = true;
+                }
+            }
+            if(!flag) break;
+        }
 
         // finding length of longest string
         for (int i = 0; i < s.length; i++) {
@@ -351,6 +367,7 @@ public class Oblig1 {
         }
 
         // The third first indexes should now be pointing at the right values, Setting min values
+        int first = Math.min(a[0], Math.min(a[1], a[2]));
         int firstLeast = a[firstMin];
         int secondLeast = a[secondMin];
         int thirdLeast = a[thirdMin];
