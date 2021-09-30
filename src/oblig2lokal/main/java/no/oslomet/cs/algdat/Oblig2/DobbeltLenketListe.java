@@ -142,6 +142,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     // hjelpemetode
     private Node<T> finnNode(int indeks)
     {
+//        indeksKontroll(indeks,false);
         if (indeks == 0) {
             return hode;
         }
@@ -195,7 +196,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
 
         // passed without this, but the task text asks for it so leaving it in
-        fratilKontroll(antall,fra,til);
+//        fratilKontroll(antall,fra,til);
 
         Node<T> temp = finnNode(fra);
         Liste<T> retList = new DobbeltLenketListe<>();
@@ -317,12 +318,83 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean fjern(T verdi) {
-        throw new UnsupportedOperationException();
+        int index = indeksTil(verdi);
+
+        if (index != -1) {
+            // calling fjern(index) is legal here as the method returns before it goes through the entire list
+            if (index == 0) {
+                fjern(index);
+                return true;
+            }
+
+            if (index == antall - 1) {
+                fjern(index);
+                return true;
+            }
+
+            Node<T> temp = finnNode(index);
+            Node<T> before = temp.forrige;
+            Node<T> after = temp.neste;
+            before.neste = after;
+            after.forrige = before;
+
+            antall--;
+            endringer++;
+
+            return true;
+        }
+        return false;
     }
 
     @Override
     public T fjern(int indeks) {
-        throw new UnsupportedOperationException();
+        indeksKontroll(indeks, false);
+        // if removing head
+        if (indeks == 0) {
+            T verdi = hode.verdi;
+            if (antall == 1) {
+                hale = hode;
+                hode.verdi = null;
+                hode.neste = null;
+                hode.forrige = null;
+
+                antall--;
+                endringer++;
+
+                return verdi;
+            }
+            hode = hode.neste;
+            hode.forrige = null;
+
+            antall--;
+            endringer++;
+
+            return verdi;
+        }
+
+        // if removing tail
+        if (indeks == antall - 1) {
+            T verdi = hale.verdi;
+            hale = hale.forrige;
+            hale.neste = null;
+
+            antall--;
+            endringer++;
+
+            return verdi;
+        }
+
+
+
+        Node<T> temp = finnNode(indeks);
+        Node<T> before = temp.forrige;
+        Node<T> after = temp.neste;
+        before.neste = after;
+        after.forrige = before;
+
+        antall--;
+        endringer++;
+        return temp.verdi;
     }
 
     @Override
