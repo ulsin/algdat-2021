@@ -143,8 +143,13 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     private Node<T> finnNode(int indeks)
     {
 //        indeksKontroll(indeks,false);
+        // if asking for head
         if (indeks == 0) {
             return hode;
+        }
+
+        if (indeks == antall - 1) {
+            return hale;
         }
 
         if (indeks < antall / 2) {
@@ -294,9 +299,9 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         int count = 0;
         Node<T> temp = hode;
         for (; count < antall; count++) {
-            if (temp == null) {
-                return -1;
-            }
+//            if (temp == null) {
+//                return -1;
+//            }
             if (temp.verdi.equals(verdi)) {
                 return count;
             }
@@ -316,8 +321,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         return oldVal;
     }
 
-    @Override
-    public boolean fjern(T verdi) {
+    public boolean fjernLazy(T verdi) {
         int index = indeksTil(verdi);
 
         if (index != -1) {
@@ -343,6 +347,59 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
             return true;
         }
+        return false;
+    }
+
+    @Override
+    public boolean fjern(T verdi) {
+        if (verdi == null) {
+            return false;
+        }
+
+        Node<T> temp = hode.neste;
+
+        while (temp != null && temp.neste != null) {
+            if (temp.verdi.equals(verdi)) {
+                temp.forrige.neste = temp.neste;
+                temp.neste.forrige = temp.forrige;
+
+                antall--;
+                endringer++;
+                return true;
+            }
+            temp = temp.neste;
+        }
+
+        if (verdi.equals(hode.verdi)) {
+            if (antall == 1) {
+                hale = hode;
+                hode.verdi = null;
+                hode.neste = null;
+                hode.forrige = null;
+
+                antall--;
+                endringer++;
+
+                return true;
+            }
+            hode = hode.neste;
+            hode.forrige = null;
+
+            antall--;
+            endringer++;
+            return true;
+        }
+
+        if (verdi.equals(hale.verdi)) {
+            hale = hale.forrige;
+            hale.neste = null;
+
+            antall--;
+            endringer++;
+
+            return true;
+        }
+
         return false;
     }
 
@@ -384,13 +441,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             return verdi;
         }
 
-
-
         Node<T> temp = finnNode(indeks);
-        Node<T> before = temp.forrige;
-        Node<T> after = temp.neste;
-        before.neste = after;
-        after.forrige = before;
+        // removing the temp node from the linked list
+        temp.forrige.neste = temp.neste;
+        temp.neste.forrige = temp.forrige;
 
         antall--;
         endringer++;
