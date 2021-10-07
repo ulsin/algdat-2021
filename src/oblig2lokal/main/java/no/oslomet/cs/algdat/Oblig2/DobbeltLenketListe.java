@@ -63,25 +63,27 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     public DobbeltLenketListe() {
 //        throw new UnsupportedOperationException();
-        hode = new Node<T>(null);
-
-        hode.forrige = null;
-        hode.neste = null;
-
-        hale = hode;
+        hode = null;
+        hale = null;
 
         antall = 0;
         endringer = 0;
     }
 
+
+    /**
+     * Generic constructor that takes in an array of generic type, and creates a linked list with the same
+     * values as the input array, holding the values in the same order
+     * @param a the array taken as input, can be of any type
+     */
     public DobbeltLenketListe(T[] a) {
 //        throw new UnsupportedOperationException();
         if (a == null) {
             throw new NullPointerException("A er null");
         }
 
-        hode = new Node<T>(null);
-        hale = new Node<T>(null);
+        hode = null;
+        hale = null;
         antall = 0;
         endringer = 0;
 
@@ -89,11 +91,11 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         int j = 0;
 
         if (a.length > 0) {
+            hode = new Node<>(null);
+            hale = new Node<>(null);
             // finding the first value in the array that isn't null, and starting from there.
             for (; j < a.length;j++) {
                 if (a[j] != null) {
-//                    hode = new Node<T>(a[j]);
-//                    hale = new Node<T>(a[j]); // hale contains the value of the last element in the array
                     hode.verdi = a[j++]; // increments here as the for loop will not do so after the break line
                     antall++;
                     break;
@@ -114,7 +116,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             hale.forrige = hode;
             hale.neste = null;
 
-            // making j the second non null value
+            // making j the second non-null value
             for (; j < a.length; j++) {
                 if (a[j] != null) {
                     hale.verdi = a[j++]; // need to put these ++ behind to make it increment before the break
@@ -125,7 +127,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
             for (; j < a.length; j++) {
                 if (a[j] != null) {
-                    Node<T> temp = new Node<T>(a[j]); // just placeholderp
+                    Node<T> temp = new Node<>(a[j]); // just placeholderp
                     hale.neste = temp;
                     temp.forrige = hale;
                     temp.neste = null;
@@ -201,7 +203,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
 
         // passed without this, but the task text asks for it so leaving it in
-//        fratilKontroll(antall,fra,til);
+        fratilKontroll(antall,fra,til);
 
         Node<T> temp = finnNode(fra);
         Liste<T> retList = new DobbeltLenketListe<>();
@@ -228,20 +230,18 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     public boolean leggInn(T verdi) {
         Objects.requireNonNull(verdi, "Can't add null object");
 
-        if (hode.verdi == null) {
-            hode.verdi = verdi;
-            antall++;
-            endringer++;
-            return true;
+        if (hode == null) {
+            hode = new Node<>(verdi);
+            hale = hode;
         } else {
-            Node<T> temp = new Node<T>(verdi);
+            Node<T> temp = new Node<>(verdi);
             hale.neste = temp;
             temp.forrige = hale;
             hale = temp;
-            antall++;
-            endringer++;
-            return true;
         }
+        antall++;
+        endringer++;
+        return true;
     }
 
     @Override
@@ -453,14 +453,20 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public void nullstill() {
-        throw new UnsupportedOperationException();
+        hale = hode;
+        hode.forrige = null;
+        hode.neste = null;
+        hode.verdi = null;
+
+        antall = 0;
+        endringer = 0;
     }
 
     @Override
     public String toString() {
         if (hode == null) {
-            Objects.requireNonNull("List cannot be empty");
-            return null;
+//            Objects.requireNonNull("List cannot be empty");
+            return "[]";
         }
 
         Node<T> temp = hode;
@@ -484,9 +490,9 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     public String omvendtString() {
-        if (hale == null) {
-            Objects.requireNonNull("List cannot be empty");
-            return null;
+        if (hode == null) {
+//            Objects.requireNonNull("List cannot be empty");
+            return "[]";
         }
 
         Node<T> temp = hale;
