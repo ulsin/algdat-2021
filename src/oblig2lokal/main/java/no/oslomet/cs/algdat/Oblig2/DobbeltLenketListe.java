@@ -4,9 +4,7 @@ package oblig2lokal.main.java.no.oslomet.cs.algdat.Oblig2;
 ////////////////// class DobbeltLenketListe //////////////////////////////
 
 
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.Objects;
+import java.util.*;
 
 
 public class DobbeltLenketListe<T> implements Liste<T> {
@@ -30,8 +28,38 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             System.out.println(liste.toString() + " " + liste.omvendtString());
         }
         */
+/*
+        String[] navn = {"Lars","Anders","Bodil","Kari","Per","Berit"};
+        Liste<String> liste = new DobbeltLenketListe<>(navn);
+        liste.forEach(s -> System.out.print(s + " "));
+        System.out.println();
+        for (String s : liste) System.out.print(s + " ");
+        */
+        // Utskrift:
+        // Lars Anders Bodil Kari Per Berit
+        // Lars Anders Bodil Kari Per Berit
+/*
 
-
+        DobbeltLenketListe<String> liste =
+                new DobbeltLenketListe<>(new String[]
+                        {"Birger","Lars","Anders","Bodil","Kari","Per","Berit"});
+        liste.fjernHvis(navn -> navn.charAt(0) == 'B'); // fjerner navn som starter med B
+        System.out.println(liste + " " + liste.omvendtString());
+        // Utskrift: [Lars, Anders, Kari, Per] [Per, Kari, Anders, Lars
+*/
+        String[] navn = {"Lars","Anders","Bodil","Kari","Per","Berit"};
+        Liste<String> liste1 = new DobbeltLenketListe<>(navn);
+//        Liste<String> liste2 = new TabellListe<>(navn);
+//        Liste<String> liste3 = new EnkeltLenketListe<>(navn);
+        DobbeltLenketListe.sorter(liste1, Comparator.naturalOrder());
+//        DobbeltLenketListe.sorter(liste2, Comparator.naturalOrder());
+//        DobbeltLenketListe.sorter(liste3, Comparator.naturalOrder());
+        System.out.println(liste1); // [Anders, Berit, Bodil, Kari, Lars, Per]
+//        System.out.println(liste2); // [Anders, Berit, Bodil, Kari, Lars, Per]
+//        System.out.println(liste3); // [Anders, Berit, Bodil, Kari, Lars, Per]
+// Tabellen navn er upåvirket:
+        System.out.println(Arrays.toString(navn));
+// [Lars, Anders, Bodil, Kari, Per, Berit]
 
     }
 
@@ -372,10 +400,12 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
         if (verdi.equals(hode.verdi)) {
             if (antall == 1) {
-                hale = hode;
-                hode.verdi = null;
-                hode.neste = null;
-                hode.forrige = null;
+//                hale = hode;
+//                hode.verdi = null;
+//                hode.neste = null;
+//                hode.forrige = null;
+                hode = null;
+                hale = null;
 
                 antall--;
                 endringer++;
@@ -410,10 +440,12 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         if (indeks == 0) {
             T verdi = hode.verdi;
             if (antall == 1) {
-                hale = hode;
-                hode.verdi = null;
-                hode.neste = null;
-                hode.forrige = null;
+//                hale = hode;
+//                hode.verdi = null;
+//                hode.neste = null;
+//                hode.forrige = null;
+                hode = null;
+                hale = null;
 
                 antall--;
                 endringer++;
@@ -517,11 +549,13 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public Iterator<T> iterator() {
-        throw new UnsupportedOperationException();
+        return new DobbeltLenketListeIterator();
     }
 
     public Iterator<T> iterator(int indeks) {
-        throw new UnsupportedOperationException();
+//        throw new UnsupportedOperationException();
+        indeksKontroll(indeks, false);
+        return new DobbeltLenketListeIterator(indeks);
     }
 
     private class DobbeltLenketListeIterator implements Iterator<T> {
@@ -536,7 +570,9 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
 
         private DobbeltLenketListeIterator(int indeks) {
-            throw new UnsupportedOperationException();
+            denne = finnNode(indeks);
+            fjernOK = false;  // blir sann når next() kalles
+            iteratorendringer = endringer;  // teller endringer
         }
 
         @Override
@@ -546,18 +582,121 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
         @Override
         public T next() {
-            throw new UnsupportedOperationException();
+//            throw new UnsupportedOperationException();
+            if (iteratorendringer != endringer) {
+                throw new ConcurrentModificationException();
+            }
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            fjernOK = true;
+            T temp = denne.verdi;
+            denne = denne.neste;
+            return temp;
         }
 
         @Override
         public void remove() {
-            throw new UnsupportedOperationException();
+            if (!fjernOK) {
+                throw new IllegalStateException();
+            }
+
+            // Need to set it like this, becasue you cannot know if it is okay to remove agian, before next() has been run
+            fjernOK = false;
+            if (endringer != iteratorendringer) {
+                throw new ConcurrentModificationException();
+            }
+
+            if (antall == 1) {
+                hode = null;
+                hale = null;
+
+                antall--;
+                endringer++;
+                iteratorendringer++;
+                return;
+            }
+            if (denne == null) {
+                hale = hale.forrige;
+                hale.neste = null;
+
+                antall--;
+                endringer++;
+                iteratorendringer++;
+                return;
+            }
+            if (denne.forrige == hode) {
+                hode = hode.neste;
+                hode.forrige = null;
+
+                antall--;
+                endringer++;
+                iteratorendringer++;
+                return;
+            }
+
+            /* sets the next one's previous pointer to be the one before this
+            * and then the previous one's next pointer, now points to this's next instead of this.
+            * Now nothing points to this and the node will be garbage collected*/
+
+//            denne.forrige.neste.forrige = denne.forrige.forrige;
+//            denne.forrige.forrige.neste = denne.forrige.neste;
+
+            Node<T> temp = denne.forrige;
+            temp.neste.forrige = temp.forrige;
+            temp.forrige.neste = temp.neste;
+
+            antall--;
+            endringer++;
+            iteratorendringer++;
         }
 
     } // class DobbeltLenketListeIterator
 
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c) {
-        throw new UnsupportedOperationException();
+//        throw new UnsupportedOperationException();
+        quicksort0(liste, 0, liste.antall() - 1, c);
+    }
+
+    private static <T> void quicksort0(Liste<T> liste, int l, int r, Comparator<? super T> c) {
+        if (l >= r) {
+            return;
+        }
+        int p = partition(liste, l, r, (l + r) / 2, c);
+        quicksort0(liste, l, p - 1, c);
+        quicksort0(liste, p + 1, r, c);
+    }
+
+    private static <T> int partition(Liste<T> liste, int l, int r, int index, Comparator<? super T> c) {
+        swap(liste, index, r);
+        int pos = parition0(liste, l, r - 1, liste.hent(r), c);
+        swap(liste, pos, r);
+        return pos;
+    }
+
+    private static <T> int parition0(Liste<T> liste, int l, int r, T seperationvalue, Comparator<? super T> c) {
+        while (true) {
+            while (l <= r && c.compare(liste.hent(l), seperationvalue) < 0) {
+                l++;
+            }
+            while (l <= r && c.compare(liste.hent(r), seperationvalue) >= 0) {
+                r--;
+            }
+            if (l < r) {
+//                T temp = liste.hent(l);
+//                liste.oppdater(l, liste.hent(r));
+//                liste.oppdater(r, temp);
+                swap(liste, l++, r--);
+            } else {
+                return l;
+            }
+        }
+    }
+
+    private static <T> void swap(Liste<T> liste, int l, int r) {
+        T temp = liste.hent(l);
+        liste.oppdater(l, liste.hent(r));
+        liste.oppdater(r, temp);
     }
 
 } // class DobbeltLenketListe
