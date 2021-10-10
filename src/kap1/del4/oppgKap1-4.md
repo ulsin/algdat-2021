@@ -47,7 +47,7 @@ Doesn't need to many changes, only changing the type in input and array type.
 ```
 
 4. La a og b være ta variabler av typen Integer. Finn ut f.eks. ved å eksperimentere, hva a.compareTo(b) returnerer. Sett så opp den regelen som metoden er kodet etter.
-- Returns 1 if a is biggger, -1 if a is smaller, 0 if equal size
+- Returns 1 if a is bigger, -1 if a is smaller, 0 if equal size
 
 5. Finn ut, ved å eksperimentere, hva metoden compareTo i class String returnerer. Du kan f.eks. lage et program som inneholder:
 
@@ -262,11 +262,395 @@ j) Programkode 1.4.4 f) inneholder tre programlinjer. Gjør det om slik at det b
 - doneeee
 
 2. 	Sjekk at Programkode 1.4.6 g) virker. Utvid tabellen, dvs. med flere studenter og studier. Erstatt så de to siste linjene med Programkode 1.4.6 h). Dropp så komparatorvariabelen c og la isteden lambda-uttrykket inngå direkte som argument i sorteringsmetoden.
+- Done i guess hahah
 
 3. 	Lag et lamda-uttrykk som ordner studentene etter studium, fornavn og etternavn.
+```java
+        Tabell.innsettingssortering(s23, (s11,s2) -> {
+            // setter k til å være return verdi fra comparison
+            int kk = s11.studium().compareTo(s2.studium());
+            // om kk er 0, så var studimene like, da sorterer vi heller på fornavn
+            if (kk == 0) {
+                kk = s11.fornavn().compareTo(s2.fornavn());
+            }
+            // om kk fortsatt er null, sorter på etternavn
+            if (kk == 0) {
+                kk = s11.etternavn().compareTo(s2.etternavn());
+            }
+            // til slutt returner vi kk, som enten da har verdi fra studium, fornavn eller etternavn
+            return kk;
+        });
+```
 
 4. 	Lag metoden public static <T> int maks(T[] a, Komparator<? super T> c). Bruk f.eks. maks-metoden som utgangspunkt. Legg den i samleklassen Tabell.
+- Done, men hva skal den brukes til?
 
 5. 	Utvid lambda-uttrykket i Programkode 1.4.6 i) slik at like lange strenger ordnes alfabetisk. La så tabellen s inneholde "21","18","8","13","20","6","16","25","3","10". Kan du forutsi hvordan den vil bli sortert? Kjør så koden.
+- Done
 
 7. 	Lambda-uttrykket i Programkode 1.4.6 h) ordner studiene «naturlig» (dvs. rekkefølgen de har i enumen). Gjør om slik at de ordnes alfabetisk etter navn (Anvendt, Data, IT).
+```java
+            int kk = s11.studium().toString().compareTo(s2.studium().toString());
+```
+
+# Oppgaver til Avsnitt 1.4.7
+1. 	La din versjon av grensesnittet Komparator inneholde alt det som er laget i Avsnitt 1.4.7, dvs. dette. Sørg for at det ligger under mappen (package) eksempelklasser. Flytt også grensesnittet Funksjon over til deg (legg det under eksempelklasser).
+- Done
+
+2. 	Sorter og skriv ut tabellen Double[] d = {5.7,3.14,7.12,3.9,6.5,7.1,7.11}; Bruk en naturligOrden-komparator. Sorter så tabellen motsatt vei (minst til slutt).
+```java
+        oppgave("Oppgave 1.4.7.2");
+        Double[] dd = {5.7,3.14,7.12,3.9,6.5,7.1,7.11};
+        Tabell.innsettingssortering(dd, Komparator.naturligOrden());
+        System.out.println(Arrays.toString(dd));
+        Tabell.innsettingssortering(dd, Komparator.omvendtOrden());
+        System.out.println(Arrays.toString(dd));
+        // oppgave 1.4.7.2
+```
+
+3. 	Gitt Boolean[] b = {false, true, true, false, false, true, false, true}; Bruk en naturligOrden-komparator til å sortere tabellen. Skriv ut resultatet.
+```java
+        Tabell.innsettingssortering(b, Komparator.naturligOrden());
+```
+
+4. 	Ta utgangspunkt i persontabellen p i Programkode 1.4.6 c). Lag kode som sorterer kun med hensyn på etternavn. Bruk en orden-teknikk.
+```java
+        Tabell.innsettingssortering(p, Komparator.naturligOrden());
+```
+
+5. 	I Programkode 1.4.7 i) sorteres strenger mhp. lengde. Lag kode som sorterer motsatt vei, dvs. lange strenger kommer først. Lag en komparator eller bruk en orden-teknikk. 
+```java
+        Tabell.innsettingssortering(s, (z,zz) -> zz.length() - z.length());
+```
+
+# Oppgaver til Avsnitt 1.4.8
+1. 	Utvid din Komparator med det som er laget i Avsnitt 1.4.8, dvs. at den blir lik dette.
+- done
+
+2. 	Blir Komparator.orden(x -> x) og Komparator.naturligOrden() det samme? Forklar!
+- Tydeligvis, se [Fasit](https://www.cs.hioa.no/~ulfu/appolonius/kap1/4/fasit148.html)
+
+4. 	I Programkode 1.4.7 i) ble det laget en komparator for datatypen String som ordner etter lengde. Men strenger med samme lengde får ingen bestemt orden. Bruk metoden deretter() slik at strenger med samme lengde ordnes alfabetisk. Bruk dette til å sortere s = {"21","18","8","13","20","6","16","25","3","10"};
+
+# Oppgaver til Avsnitt 1.4.9
+![Tabell av navn](Tabell149a-NavnKomendieVSNavnJava.jpg)
+
+1. 	Gjør om fra Komparator til Comparator i metoden i Programkode 1.4.6 b). Det eneste som trengs er å bytte ut K med C i metodens signatur. Se også Programkode 1.4.9 b). Sjekk så at Programkode 1.4.9 c) virker. Gjør det samme i maks-metoden hvis du har laget en versjon av den der Komparator inngår (se Oppgave 4 i Avsnitt 1.4.6).
+- Done
+
+2. 	Lag en komparator-versjoner (Comparator) av 
+
+
+a) utvalgssortering, 
+```java
+    public static <T> void bytt(T[] a, int i, int j) {
+        T temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+
+    public static <T> int min(T[] a, int from, int to, Comparator<T> c) {
+        fratilKontroll(a.length, from, to);
+
+        int index = from;
+        T minverdi = a[from];
+
+        for (int i = from; i < to; i++) {
+            if (c.compare(a[i], minverdi) < 0) { // if a[i] is less than minverdi
+                index = i;
+                minverdi = a[i];
+            }
+        }
+
+        return index;
+    }
+
+    public static <T> void utvalgsSortering(T[] a, int from, int to, Comparator<T> c) {
+        for (int i = 0; i < a.length - 1; i++)
+            bytt(a, i, min(a, i, a.length, c));  // to hjelpemetoder
+    }
+```
+
+b) binærsøk, 
+```java
+    public static <T> int binærsøk(T[] a, int from, int to, T value, Comparator<T> c) {
+        Tabell.fratilKontroll(a.length, from, to);  // se Programkode 1.2.3 a)
+        int v = from, h = to - 1;  // v og h er intervallets endepunkter
+
+        while (v < h)  // obs. må ha v < h her og ikke v <= h
+        {
+            int m = (v + h) / 2;  // heltallsdivisjon - finner midten
+
+            if (c.compare(value, a[m]) > 0) v = m + 1;   // value må ligge i a[m+1:h]
+            else h = m;                   // value må ligge i a[v:m]
+        }
+        if (h < v || c.compare(value, a[v]) < 0) return -(v + 1);  // ikke funnet
+        else if (value == a[v]) return v;            // funnet
+        else return -(v + 2);                       // ikke funnet
+    }
+```
+
+c) kvikksortering
+```java
+    private static <T> int parter0T(T[] a, int v, int h, T skilleverdi, Comparator<T> c) {
+        while (true)                                  // stopper når v > h
+        {
+            while (v <= h && c.compare(a[v], skilleverdi) < 0) v++;   // h er stoppverdi for v
+            while (v <= h && c.compare(a[h], skilleverdi) >= 0) h--;  // v er stoppverdi for h
+
+            if (v < h) bytt(a, v++, h--);                 // bytter om a[v] og a[h]
+            else return v;  // a[v] er nåden første som ikke er mindre enn skilleverdi
+        }
+    }
+
+    public static <T> int parterT(T[] a, int fra, int til, T skilleverdi, Comparator<T> c) {
+        return parter0T(a, fra, til - 1, skilleverdi, c);
+    }
+
+    public static <T> int parterT(T[] a, T skilleverdi, Comparator<T> c) {
+        return parter0T(a, 0, a.length - 1, skilleverdi, c);
+    }
+
+
+    //    Programkode 1.3.9 f)
+    private static <T> int sParter0T(T[] a, int v, int h, int indeks, Comparator<T> c) {
+        bytt(a, indeks, h);           // skilleverdi a[indeks] flyttes bakerst
+        int pos = parter0T(a, v, h - 1, a[h], c);  // partisjonerer a[v:h - 1]
+        bytt(a, pos, h);              // bytter for å få skilleverdien på rett plass
+        return pos;                   // returnerer posisjonen til skilleverdien
+    }
+
+    //    Programkode 1.3.9 h)
+    private static <T> void kvikksortering0(T[] a, int v, int h, Comparator<T> c)  // en privat metode
+    {
+        if (v >= h) return;  // a[v:h] er tomt eller har maks ett element
+        int k = sParter0T(a, v, h, (v + h) / 2, c);  // bruker midtverdien
+        kvikksortering0(a, v, k - 1, c);     // sorterer intervallet a[v:k-1]
+        kvikksortering0(a, k + 1, h, c);     // sorterer intervallet a[k+1:h]
+    }
+
+    public static <T> void kvikksortering(T[] a, int fra, int til, Comparator<T> c) // a[fra:til>
+    {
+        fratilKontroll(a.length, fra, til);  // sjekker når metoden er offentlig
+        kvikksortering0(a, fra, til - 1, c);  // v = fra, h = til - 1
+    }
+
+    public static <T> void kvikksortering(T[] a, Comparator<T> c)   // sorterer hele tabellen
+    {
+        kvikksortering0(a, 0, a.length - 1, c);
+    }
+```
+
+d) flettesortering
+```java
+    private static <T> void flett(T[] a, T[] b, int fra, int m, int til, Comparator<T> c)
+    {
+        int n = m - fra;                // antall elementer i a[fra:m>
+        System.arraycopy(a,fra,b,0,n);  // kopierer a[fra:m> over i b[0:n>
+
+        int i = 0, j = m, k = fra;      // løkkevariabler og indekser
+
+        while (i < n && j < til)        // fletter b[0:n> og a[m:til> og
+        {                               // legger resultatet i a[fra:til>
+            a[k++] = c.compare(b[i], a[j]) <= 0 ? b[i++] : a[j++];
+        }
+
+        while (i < n) a[k++] = b[i++];  // tar med resten av b[0:n>
+    }
+//    Programkode 1.3.11 f)
+
+//            Flg. rekursive (og private) metode benytter flett-metoden i Programkode 1.3.11 f):
+
+    private static <T> void flettesortering(T[] a, T[] b, int fra, int til, Comparator<T> c)
+    {
+        if (til - fra <= 1) return;   // a[fra:til> har maks ett element
+        int m = (fra + til)/2;        // midt mellom fra og til
+
+        flettesortering(a,b,fra,m, c);   // sorterer a[fra:m>
+        flettesortering(a,b,m,til, c);   // sorterer a[m:til>
+
+        if (c.compare(a[m-1], a[m]) > 0) flett(a,b,fra,m,til,c);  // fletter a[fra:m> og a[m:til>
+    }
+//    Programkode 1.3.11 g)
+
+//    I koden over deles a[fra:til> på midten og metoden kalles (rekursjon) først på a[fra:m> og så på a[m:til>. Etterpå vil de være sortert og kan flettes sammen. Legg merke til setningen: if (a[m-1] > a[m]). Intervallet a[fra:til> er allerede sortert hvis den siste i a[fra:m> er mindre enn eller lik den første i a[m:til>. Midtdelingen gjør at dette blir av orden n log2(n) og dermed en effektiv metode. Flg. offentlige metode sorterer en hel tabell:
+
+    public static <T> void flettesortering(T[] a, Comparator<T> c)
+    {
+        T[] b = Arrays.copyOf(a, a.length/2);   // en hjelpetabell for flettingen
+        flettesortering(a,b,0,a.length, c);          // kaller metoden over
+    }
+//    Programkode 1.3.11 h)
+```
+
+3. 	
+a) Sjekk at Programkode 1.4.9 f) virker og gir den utskriften som står oppgitt.
+- Yupp
+
+b) Bruk komparatoren fra Programkode 1.4.9 d) i Programkode 1.4.9 f). Virker det?
+- Yeah
+
+c) De to komparatoren rett under Programkode 1.4.9 e) bruker koordinatene direkte. Bruk dem i Programkode 1.4.9 f). Virker det?
+- Yupp
+  	
+d) Komparatorene i punkt c) over har (Point p) -> p.x i første parentes. Ta vekk Point slik at det kun står p -> p.x. Hva skjer?
+- Cannot resolve symbol x
+
+e) Komparatoren i Programkode 1.4.9 f) bruker metodene getX og getY som returnerer en double. Deretter blir double konvertert til Double (autoboksing). Her får vi mer effektiv kode hvis vi isteden bruker comparingDouble og thenComparingDouble. Prøv det!
+- aight
+
+f) Anta at vi har en samling punkter i 1. kvadrant (ingen negative koordinater). Lag en komparator som ordner punktene på flg. måte: Et punkt som ligger nærmere origo enn et annet punkt regnes som «mindre» enn det andre. Hvis de ligger like langt fra origo regnes det som har minst y-koordinat som «minst». Bruk den i Programkode 1.4.9 f).
+- 
+
+g) Anta at vi har en samling punkter i 1. kvadrant (ingen negative koordinater). Vinkelen til et punkt p forskjellig fra origo defineres som den vinkelen den rette linjen gjennom origo og p danner med x-aksen. Lag en komparator som ordner punktene på flg. måte: Det av to punkter som har minst vinkel regnes som «minst». Hvis de to punktene har samme vinkel, regnes det som minst som ligger nærmest origo. Spesielt gjelder at origo, dvs. punktet (0,0), er «mindre enn» alle andre punkter. Bruk den i Programkode 1.4.9 f).
+      
+4. 	
+a) Flytt Dato til deg (package eksempelklasser). Sjekk at Programkode 1.4.9 h) virker.
+- yupp
+
+b) I Programkode 1.4.9 h) inngår den versjonen av innsettingssortering som er laget for sammenlignbare typer, se Programkode 1.4.2 e). Bruk isteden komparatorversjonen ( Programkode 1.4.6 b ) og en naturalOrder-komparator.
+- 
+
+c) Sjekk at compareTo() i datoklassen i Programkode 1.4.9 g) oppfyller kravene 1 - 4. Er det slik at x.compareTo(y) = -y.compareTo(x)?
+
+d) Metoden equals() i datoklassen er kodet ved hjelp av compareTo(). Lag egen kode for equals(). Pass på at koden blir slik at x.equals(y) = y.equals(x) for alle datoer x og y. Pass også på at x.equals(y) = true hvis og bare hvis x.compareTo(y) = 0.
+
+e) hashCode() i Dato er laget ved hjelp av en metode fra klassen Objects. Sjekk hva den gjør. Kommentér vekk så hashCode(). Bruker du NetBeans vil du ved siden av equals() få en melding (et gult symbol) om at du bør kode hashCode(). Klikker du på det gule symbolet, vil du få hjelp. Gjør det! Omvendt, har laget hashCode(), men ikke equals(), vil du også få hjelp. Det finnes tilsvarende muligheter i Eclipse - bruk menyvalget Source.
+
+f) Legg inn en ekstra konstruktør i datoklassen. I den skal måneden kunne skrives vha. enumkonstanter fra enum Måned (se Oppgave 3 i Avsnitt 1.4.5). For eksempel skal 17. mai og julaften kunne opprettes ved: Dato mai17 = new Dato(17,Måned.MAI,2016); og Dato julaften = new Dato(24,Måned.DES,2016); Uttskrift skal bli slik: 17. mai 2016 og 24. desember 2016. Lag konstruktøren og de tilleggene og endringene som må til. Bruk StringBuilder når du omkoder toString().
+
+      
+5. 	Lag klassen Klokkeslett. Den skal implementere Comparable. Det holder med timer og minutter. Klokkeslett skal ordnes slik at 00:00 kommer først og 23:59 sist. Konstruktøren skal ha en String som argument og være på formen tt:mm, f.eks. "12:00". Lag også metodene equals(), hashCode() og toString(). Bruk Dato-klassen som mønster. Lag en programbit der du oppretter en tabell av klokkeslett som så sorteres og skrives ut.
+
+```java
+public class Klokkeslett implements Comparable<Klokkeslett> {
+    private final String time;
+
+    public Klokkeslett(String time) {
+        this.time = time;
+    }
+
+    @Override
+    public int compareTo(Klokkeslett klokkeslett) {
+        int k = time.substring(0, 1).compareTo(klokkeslett.time.substring(0, 1));
+        if (k == 0) {
+            k = time.substring(3, 4).compareTo(klokkeslett.time.substring(3, 4));
+        }
+        return k;
+    }
+
+    public boolean equals(Object o)              // equals
+    {
+        if (o == this) return true;
+        if (!(o instanceof Klokkeslett)) return false;
+        return compareTo((Klokkeslett) o) == 0;
+    }
+
+    public String toString()                     // toString
+    {
+        return time;
+    }
+
+    public int hashCode()
+    {
+        return Objects.hash(time);
+    }
+}
+```
+
+```java
+        oppgave("1.4.9.5");
+
+        Klokkeslett[] timeStamp = {
+                new Klokkeslett("01:45"),
+                new Klokkeslett("00:21"),
+                new Klokkeslett("01:32")
+        };
+
+        Tabell.innsettingssortering(timeStamp);
+        System.out.println(Arrays.toString(timeStamp));
+    }
+```
+
+```java
+// Uskrift: 
+[00:21, 01:32, 01:45]
+```
+6. 	Lag en klasse Tid som har et klokkeslett og en dato som instansvariabler. Se Oppgave 3 og Programkode 1.4.9 g). Klassen skal implementere Comparable. Tider skal først ordnes mhp. dato og så med hensyn på klokkeslett. Lag også metodene equals, hashCode og toString. Benytt flest mulig av metodene i klassene Dato og Klokkeslett i kodingen. 
+
+```java
+public class Tid implements Comparable<Tid> {
+    private final Dato dato;
+    private final Klokkeslett klokkeslett;
+
+    public Tid(Dato dato, Klokkeslett klokkeslett) {
+        this.dato = dato;
+        this.klokkeslett = klokkeslett;
+    }
+
+    public Tid(int dag, int mnd, int year, String tid) {
+        this.dato = new Dato(dag, mnd, year);
+        this.klokkeslett = new Klokkeslett(tid);
+    }
+
+    @Override
+    public int compareTo(Tid t) {
+        int k = this.dato.compareTo(t.dato);
+        if (k == 0) {
+            k = this.klokkeslett.compareTo(t.klokkeslett);
+        }
+        return k;
+    }
+
+    public boolean equals(Object o)              // equals
+    {
+        if (o == this) return true;
+        if (!(o instanceof Tid)) return false;
+        return compareTo((Tid)o) == 0;
+    }
+
+    public String toString()                     // toString
+    {
+        return dato.toString() + " " + klokkeslett.toString();
+    }
+
+    public int hashCode()
+    {
+        return Objects.hash(dato.hashCode(),klokkeslett.hashCode());
+    }
+}
+```
+
+```java
+        Tid[] tider = new Tid[4];
+
+        tider[0] = new Tid(24,12,2014,"15:30");
+        tider[1] = new Tid(24,12,2014,"12:00");
+        tider[2] = new Tid(23,12,2014,"12:00");
+        tider[3] = new Tid(23,12,2014,"09:00");
+
+        for (Tid tid : tider) System.out.println(tid);
+
+        System.out.println("\n\nTider sortert\n");
+
+        Tabell.innsettingssortering(tider);
+
+        for (Tid tid : tider) System.out.println(tid);
+```
+
+```
+ Oppgave 1.4.9.9 
+
+24/12-2014 15:30
+24/12-2014 12:00
+23/12-2014 12:00
+23/12-2014 09:00
+
+
+Tider sortert
+
+23/12-2014 09:00
+23/12-2014 12:00
+24/12-2014 12:00
+24/12-2014 15:30
+```
