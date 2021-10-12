@@ -563,7 +563,7 @@ public class Tabell {
 
 
     //    Programkode 1.3.9 f)
-    private static int sParter0(int[] a, int v, int h, int indeks) {
+    public static int sParter0(int[] a, int v, int h, int indeks) {
         bytt(a, indeks, h);           // skilleverdi a[indeks] flyttes bakerst
         int pos = parter0(a, v, h - 1, a[h]);  // partisjonerer a[v:h - 1]
         bytt(a, pos, h);              // bytter for å få skilleverdien på rett plass

@@ -151,12 +151,93 @@ main() er ferdig!
 
 # Oppgaver til Avsnitt 1.5.3
 1. 	Sjekk at sum-metoden i Programkode 1.5.1 e) oppfyller krav 1 og 2. Hva blir maksimal rekutsjonsdybde og hva blir det totale antallet kall?
+```java
+  public static int sum(int[] a, int n)   // summen av de n første
+  {
+    if (n == 1) return a[0];       // summen er verdien selv
+    return sum(a,n-1) + a[n-1];    // summen av de n-1 første + a[n-1]
+  }
+            //   Programkode 1.5.1 e)
+```
+- Makismalt dybde blir lik n, eller til n = 1, og det blir n antall kall
+- Oppfyller krav 1, n blir 1 mindre per kall 
+- Oppfyller krav 2, har basistilfelle når n = 1
+
+
 2. 	Sjekk at sum-metoden i Programkode 1.5.1 f) oppfyller krav 1 og 2. Hva blir maksimal rekutsjonsdybde og hva blir det totale antallet kall?
+- Antar at oppgaven ber om g) egentlig
+```java
+  public static int sum(int[] a, int v, int h)   // intervallet a[v:h]
+  {
+    if (v == h) return a[v];   // summen av én verdi er verdien selv
+    int m = (v + h)/2;         // finner midten
+    return sum(a,v,m) + sum(a,m+1,h);  // summen av de to halvdelene
+  }
+            //   Programkode 1.5.1 g)
+```
+- Krav 2 - Har basistilfelle der v == h
+- Krav 1, m endres for hvert kall
+
+blir maks 2n-1 kall, med dybde på n/2 (fasit sier vist log_2(n) rundet opp)
+
 3. 	Tegn rekursjonstreet til kallet sum(1,8) der sum er metoden i Programkode 1.5.3 b).
+```java
+  public static int sum(int k, int n)  // summen av tallene fra k til n
+  {
+    if (k == n) return k;              // summen av ett tall
+    int m = (k + n)/2;                 // det midterste tallet
+    return sum(k,m) + sum(m+1,n);
+  }
+            //   Programkode 1.5.3 b)
+```
+
+Tok bilde på telefon
+
 
 # Oppgaver til Avsnitt 1.5.7
 1.  
 
 a) Legg en utskriftssetning med teksten "Kallet med [" + v + ":" + h + "] starter!" først og en med "Kallet med [" + v + ":" + h + "] er ferdig!" sist i Programkode 1.5.7 a). Kjør så kvikksortering på en permutasjon av tallene fra 1 til 10. Hva blir utskriften?
+```
+Kallet med [0:9] starter!
+Kallet med [0:5] starter!
+Kallet med [0:4] starter!
+Kallet med [0:-1] starter!
+Kallet med [1:4] starter!
+Kallet med [1:0] starter!
+Kallet med [2:4] starter!
+Kallet med [2:1] starter!
+Kallet med [3:4] starter!
+Kallet med [3:2] starter!
+Kallet med [4:4] starter!
+Kallet med [3:4] er ferdig!
+Kallet med [2:4] er ferdig!
+Kallet med [1:4] er ferdig!
+Kallet med [0:4] er ferdig!
+Kallet med [6:5] starter!
+Kallet med [0:5] er ferdig!
+Kallet med [7:9] starter!
+Kallet med [7:6] starter!
+Kallet med [8:9] starter!
+Kallet med [8:8] starter!
+Kallet med [10:9] starter!
+Kallet med [8:9] er ferdig!
+Kallet med [7:9] er ferdig!
+Kallet med [0:9] er ferdig!
+```
 
-b) Utskriften fra a) vil vise at både tomme intervaller (h < v) og intervaller med lengde 1 legges på stakken. Men de er allerede sortert. Legg inn kode i Programkode 1.5.7 a) slik at kun intervaller med lengde større enn 1 behandles. 
+b) Utskriften fra a) vil vise at både tomme intervaller (h < v) og intervaller med lengde 1 legges på stakken. Men de er allerede sortert. Legg inn kode i Programkode 1.5.7 a) slik at kun intervaller med lengde større enn 1 behandles.
+```java
+    private static void kvikksortering0(int[] a, int v, int h)
+    {
+        System.out.println("Kallet med [" + v + ":" + h + "] starter!");
+        if (v >= h) return;   // tomt eller maks ett element
+
+        int k = Tabell.sParter0(a,v,h,(v + h)/2);   // se Programkode 1.3.9 f)
+        if (k-1 - v == 1) return;
+        kvikksortering0(a,v,k-1);
+        if (h - k+1 == 1) return;
+        kvikksortering0(a,k+1,h);
+        System.out.println("Kallet med [" + v + ":" + h + "] er ferdig!");
+    }
+```

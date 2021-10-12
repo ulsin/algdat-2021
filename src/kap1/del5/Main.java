@@ -25,10 +25,28 @@ public class Main {
 //        int sum = tverrsumKom(72952);
 //        System.out.println("main() er ferdig!");
 
-        System.out.println("main() starter!");
-        int sum = euklid(72952,123);
-        System.out.println("main() er ferdig!");
+//        System.out.println("main() starter!");
+//        int sum = euklid(72952,123);
+//        System.out.println("main() er ferdig!");
+
+        int[] a = Tabell.randPerm(10);
+        kvikksortering0(a, 0, a.length-1);
+        System.out.println(Arrays.toString(a));
     }
+
+    private static void kvikksortering0(int[] a, int v, int h)
+    {
+        System.out.println("Kallet med [" + v + ":" + h + "] starter!");
+        if (v >= h) return;   // tomt eller maks ett element
+
+        int k = Tabell.sParter0(a,v,h,(v + h)/2);   // se Programkode 1.3.9 f)
+        if (k-1 - v == 1) return;
+        kvikksortering0(a,v,k-1);
+        if (h - k+1 == 1) return;
+        kvikksortering0(a,k+1,h);
+        System.out.println("Kallet med [" + v + ":" + h + "] er ferdig!");
+    }
+//    Programkode 1.5.7 a)
 
     public static int a(int n)           // n må være et ikke-negativt tall
     {
