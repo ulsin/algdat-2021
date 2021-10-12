@@ -1,9 +1,6 @@
 package kap1.del3;
 
-import static kap1.Tabell.*;
-
-import kap1.Tabell;
-import oblig1Lokal.main.java.no.oslomet.cs.algdat.Oblig1.Oblig1;
+import eksempelklasser.Tabell;
 
 import java.util.Arrays;
 

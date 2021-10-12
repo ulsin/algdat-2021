@@ -2,7 +2,7 @@ package oblig1Lokal.main.java.no.oslomet.cs.algdat.Oblig1;
 
 ////// Løsningsforslag Oblig 1 ////////////////////////
 
-import kap1.Tabell;
+import eksempelklasser.Tabell;
 
 import java.util.*;
 

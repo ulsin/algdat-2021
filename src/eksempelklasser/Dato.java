@@ -1,4 +1,4 @@
-package kap1.eksempelklasser;
+package eksempelklasser;
 
 import java.util.Objects;
 

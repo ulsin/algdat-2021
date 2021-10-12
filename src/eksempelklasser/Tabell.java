@@ -1,6 +1,4 @@
-package kap1;
-
-import kap1.eksempelklasser.Komparator;
+package eksempelklasser;
 
 import java.util.Arrays;
 import java.util.Comparator;

@@ -1,4 +1,4 @@
-package kap1.eksempelklasser;
+package eksempelklasser;
 
 @FunctionalInterface                // legges i mappen eksempelklasser
 public interface Komparator<T>      // et funksjonsgrensesnitt

@@ -1,13 +1,11 @@
 package kap1.del4;
 
-import kap1.Tabell;
-import kap1.eksempelklasser.*;
+import eksempelklasser.Tabell;
+import eksempelklasser.*;
 
 import java.awt.*;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 public class Kap1Del4 {
     public static void main(String[] args) {

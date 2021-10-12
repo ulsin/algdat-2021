@@ -1,4 +1,4 @@
-package kap1.eksempelklasser;
+package eksempelklasser;
 
 public enum Studium  // legges under package eksempelklasser
 {

@@ -1,4 +1,4 @@
-package kap1.eksempelklasser;
+package eksempelklasser;
 
 public class Student extends Person   // Student blir subklasse til Person
 {

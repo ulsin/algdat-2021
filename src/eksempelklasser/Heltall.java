@@ -1,4 +1,4 @@
-package kap1.eksempelklasser;
+package eksempelklasser;
 
 public final class Heltall implements Comparable<Heltall>
 {

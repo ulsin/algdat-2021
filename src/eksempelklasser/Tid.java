@@ -1,6 +1,5 @@
-package kap1.eksempelklasser;
+package eksempelklasser;
 
-import java.util.Comparator;
 import java.util.Objects;
 
 public class Tid implements Comparable<Tid> {

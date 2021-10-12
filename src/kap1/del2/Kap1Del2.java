@@ -1,6 +1,6 @@
 package kap1.del2;
 
-import kap1.Tabell;
+import eksempelklasser.Tabell;
 
 import java.util.Arrays;
 
