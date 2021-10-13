@@ -1,6 +1,7 @@
 package eksempelklasser;
 
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -11,6 +12,7 @@ public class TabellListe<T> implements Liste<T>
 {
     private T[] a;
     private int antall;
+    private int endringer;
 
     // konstruktører og metoder kommer her
     @SuppressWarnings("unchecked")          // pga. konverteringen: Object[] -> T[]
@@ -80,6 +82,7 @@ public class TabellListe<T> implements Liste<T>
         }
 
         a[antall++] = verdi;    // setter inn ny verdi
+        endringer++;
         return true;            // vellykket innlegging
     }
 
@@ -96,6 +99,7 @@ public class TabellListe<T> implements Liste<T>
 
         a[indeks] = verdi;     // setter inn ny verdi
         antall++;              // vellykket innlegging
+        endringer++;
     }
 //    Programkode 3.2.3 b)
 
@@ -106,6 +110,7 @@ public class TabellListe<T> implements Liste<T>
 
         T gammelverdi = a[indeks];      // tar vare på den gamle verdien
         a[indeks] = verdi;              // oppdaterer
+        endringer++;
         return gammelverdi;             // returnerer den gamle verdien
     }
 
@@ -115,6 +120,7 @@ public class TabellListe<T> implements Liste<T>
         T verdi = a[indeks];
 
         antall--; // sletter ved å flytte verdier mot venstre
+        endringer++;
         System.arraycopy(a, indeks + 1, a, indeks, antall - indeks);
         a[antall] = null;   // tilrettelegger for "søppeltømming"
 
@@ -162,6 +168,7 @@ public class TabellListe<T> implements Liste<T>
             a = (T[])new Object[10];       // oppretter tabellen
         }
         antall = 0;                    // foreløpig ingen verdier
+        endringer = 0;
     }
 
     @Override
@@ -188,6 +195,7 @@ public class TabellListe<T> implements Liste<T>
     private class TabellListeIterator implements Iterator<T>
     {
         private int denne = 0;       // instansvariabel
+        private int iteratorendringer = endringer;
 
         public boolean hasNext()     // sjekker om det er flere igjen
         {
@@ -202,34 +210,49 @@ public class TabellListe<T> implements Liste<T>
 
         private boolean fjernOK = false;   // ny instansvariabel i TabellListeIterator
 
-        public T next()                    // ny versjon
+        public T next()
         {
-            if (!hasNext())
-                throw new NoSuchElementException("Tomt eller ingen verdier igjen!");
-
-            T denneVerdi = a[denne];   // henter aktuell verdi
-            denne++;                   // flytter indeksen
-            fjernOK = true;            // nå kan remove() kalles
-
-            return denneVerdi;         // returnerer verdien
+          if (iteratorendringer != endringer)
+          {
+            throw new ConcurrentModificationException("Listen er endret!");
+          }
+      
+          if (!hasNext())
+          {
+            throw new NoSuchElementException("Tomt eller ingen verdier igjen!");
+          }
+      
+          T denneVerdi = a[denne];   // henter aktuell verdi
+          denne++;                   // flytter indeksen
+          fjernOK = true;            // nå kan remove() kalles
+          return denneVerdi;         // returnerer verdien
         }
-
-        public void remove()         // ny versjon
+      
+        public void remove()
         {
-            if (!fjernOK) throw
-                    new IllegalStateException("Ulovlig tilstand!");
-
-            fjernOK = false;           // remove() kan ikke kalles på nytt
-
-            // verdien i denne - 1 skal fjernes da den ble returnert i siste kall
-            // på next(), verdiene fra og med denne flyttes derfor en mot venstre
-            antall--;           // en verdi vil bli fjernet
-            denne--;            // denne må flyttes til venstre
-
-            System.arraycopy(a, denne + 1, a, denne, antall - denne);  // tetter igjen
-            a[antall] = null;   // verdien som lå lengst til høyre nulles
+          if (iteratorendringer != endringer) throw new
+            ConcurrentModificationException("Listen er endret!");
+      
+          if (!fjernOK) throw
+            new IllegalStateException("Ulovlig tilstand!");
+      
+          fjernOK = false;           // remove() kan ikke kalles på nytt
+      
+          // verdien i denne - 1 skal fjernes da den ble returnert i siste kall
+          // på next(), verdiene fra og med denne flyttes derfor en mot venstre
+      
+          antall--;           // en verdi vil bli fjernet
+          denne--;            // denne må flyttes til venstre
+      
+          // tetter igjen
+          System.arraycopy(a, denne + 1, a, denne, antall - denne);
+      
+          a[antall] = null;   // verdien som lå lengst til høyre nulles
+      
+          endringer++;
+          iteratorendringer++;
         }
-//        Programkode 3.2.4 c)
+                    //   Programkode 3.2.5 e)
 
         // Think this is a method that works like foreach only that it doesn't go into null pointers, it stops at antall
         @Override
