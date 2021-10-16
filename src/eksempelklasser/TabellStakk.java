@@ -122,7 +122,15 @@ public class TabellStakk<T> implements Stakk<T>
         }
     }
 
-    public static <T> void kopier(Stakk<T> A, Stakk<T> B) {
+    public static <T> void snu3(Stakk<T> A) {
+        TabellKø<T> queue = new TabellKø<T>();
+
+        while (!A.tom()) queue.leggInn(A.taUt());
+        while (!queue.tom()) A.leggInn(queue.taUt());
+    }
+
+
+        public static <T> void kopier(Stakk<T> A, Stakk<T> B) {
         Stakk<T> C = new TabellStakk<>();
 
         while (!A.tom()) {

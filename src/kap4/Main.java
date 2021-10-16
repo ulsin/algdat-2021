@@ -1,14 +1,12 @@
 package kap4;
 
-import eksempelklasser.Stakk;
-import eksempelklasser.Tabell;
-import eksempelklasser.TabellStakk;
+import eksempelklasser.*;
 
 import java.util.Comparator;
 
 public class Main {
     public static void main(String[] args) {
-        TabellStakk<String> sStakk = new TabellStakk<>();
+        /*TabellStakk<String> sStakk = new TabellStakk<>();
 
         sStakk.leggInn("Woop");
         sStakk.leggInn("Waaaaap");
@@ -37,5 +35,39 @@ public class Main {
         TabellStakk.sorter(intStakk, Comparator.naturalOrder());
 
         System.out.println(intStakk);
+        */
+
+        TabellKø<String> queue = new TabellKø<String>();
+        queue.leggInn("A");
+        queue.leggInn("B");
+        queue.leggInn("C");
+
+        System.out.println(queue);
+        System.out.println(queue.indeksTil("B"));
+        System.out.println(queue.indeksTil("D"));
+        System.out.println(queue.indeksTil("A"));
+
+        TabellKø.snu(queue);
+        System.out.println(queue);
+        queue.nullstill();
+        System.out.println(queue);
+
+        Kø<Integer> kø = new EnkeltLenketListeKø<>();
+
+        for (int i = 1; i <= 10; i++) kø.leggInn(i);
+
+        while (!kø.tom())
+        {
+            System.out.print(kø.taUt() + " ");
+        }
+
+        System.out.println("\n\n\n");
+
+        Kø<Integer> køRand = new EnkeltLenketListeKø<>(Tabell.randPermInteger(10));
+
+        System.out.println(køRand);
+        Kø.sorter(køRand, Comparator.naturalOrder());
+        System.out.println(køRand);
+
     }
 }

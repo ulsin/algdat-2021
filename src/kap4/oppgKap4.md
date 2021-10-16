@@ -169,3 +169,169 @@
         snu2(A);
     }
 ```
+
+# Oppgaver til Avsnitt 4.2.1
+1. 	Wikipedia har en artikkel om Queue. Les hva som står der.
+- Done
+
+
+2. 	Det er enkelt å snu innholdet av en kø hvis en kan bruke en stakk som hjelpemiddel. Da er det bare å legge alle verdiene fra køen over på stakken og så ta dem fra stakken og legge dem tilbake i køen. Dvs. slik:
+
+  while (!kø.tom()) stakk.leggInn(kø.taUt());     // fra kø til stakk
+  while (!stakk.tom()) kø.leggInn(stakk.taUt());  // fra stakk til kø
+
+Men er det mulig å snu innholdet i en kø:
+  	a) Ved å bruke to hjelpekøer? Se også Oppgave 11 i Avsnitt 4.2.2.
+      - Anntar ja? Du kan bytte på hvem du bruker som holder og hvem du har som kø som tar imot
+  	b) Ved å bruke én hjelpekø og noen hjelpevariabler? Se også Oppgave 12 i Avsnitt 4.2.2.
+      - Ja blir samme som over
+  	c) Ved å bruke kun hjelpevariabler? Se også Oppgave 13 i Avsnitt 4.2.2. 
+      - Anntar ja siden det er en oppgave
+
+# Oppgaver til Avsnitt 4.2.2
+1. 	Tegn en sirkulær tabell med plass til 16 verdier. Sett på indeksene/posisjonene slik som i Figur 4.2.2 f). Fra starten av er både fra og til lik 0.
+
+a) Legg inn fortløpende A, B, C, D, E, F, G, H, I og J i tabellen du har tegnet. Ta så ut fortløpende fem verdier. Hva blir nå fra og til? Sjekk ved hjelp av tegningen at koden for metoden antall() regner ut rett svar for antallet.
+- fra =5 , til = 10, antall = 10 - 5 = 5
+
+b) Fortsett fra a) og legg inn fortløpende K, L, M, N, O, P, Q, R, S og T i tabellen. Ta så ut fortløpende tre verdier. Hva blir nå fra og til? Sjekk ved hjelp av tegningen at koden for metoden antall() fortsatt regner ut rett svar for antallet.
+- til = 5, tabellen utvides med lengde lik 32, øverste index lik 31, og til = 15 og fra = 0
+- tar ut 3, til = 15, fra =  3
+- antall = 15 - 3 = 12
+    
+c) Fortsett fra b). Ta ut fortløpende alle verdiene. Hva blir nå fra og til?
+til = fra = 15
+
+1. 	Tegn en sirkulær tabell med plass til 8 verdier. Sett på indekser fra 0 til 7. Sett både fra og til lik 0. Legg inn forløpende A, B, C, D, E, F, G og H. Hva blir fra og til?
+tabellen utvides, fra = 0 og til = 8, antall = 16
+
+
+2. 	Fortsett fra Oppgave 2. Ta ut fortløpende tre verdier. Legg så inn I, J og K. Hva blir fra og til? Ta ut fortløpende alle verdiene. Hva blir fra og til? Poenget er at fra lik til kan bety at køen er tom eller at den er full. Men hvis vi sørger for at den aldri er full, så betyr likhet mellom fra og til at køen er tom.
+fra = 3, til = 11, så fra = til = 11
+
+3. 	Flytt grensesnittet Kø over i ditt prosjekt (f.eks. under hjelpeklasser).
+- Done
+
+4. 	Flytt klassen TabellKø over i ditt prosjekt (f.eks. under hjelpeklasser). Legg inn de ferdige metodene antall(), leggInn(), utvidTabell() og taUt() inn i klassen
+- Done
+
+5. 	Lag kode for metodene kikk(), tom() og nullstill() i TabellKø. Se grensesnittet Kø.
+```java
+    public T kikk() {
+        return a[fra];
+    }
+```
+
+```java
+    public boolean tom() {
+        return fra == til;
+    }
+```
+
+```java
+    public void nullstill() {
+        for (int i = 0; i < antall(); i++) {
+            a[fra] = null;                    // nuller innholdet
+            fra++;                            // øker fra med 1
+            if (fra == a.length) fra = 0;
+        }
+        fra = 0;
+        til = 0;
+    }
+```
+
+
+6. 	Lag kode for metoden toString i TabellKø. Hvis køen er tom skal den returnere tegnstrengen "[]". Hvis den f.eks. inneholder A, B og C skal den returnere "[A, B, C]".
+```java
+    public String toString() {
+        if (tom()) {
+            return "[]";
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append('[');
+        int fraTemp = fra;
+
+        for (int i = antall(); i > 1; i--) {
+            sb.append(a[fraTemp++].toString());
+            sb.append(", ");
+
+            if(fraTemp == a.length) fraTemp = 0;
+        }
+
+        sb.append(a[fraTemp]);
+        sb.append(']');
+
+        return sb.toString();
+    }
+```
+
+7. 	Det kan være aktuelt å kjenne til hvor langt ut i køen en bestemt verdi ligger. Legg inn metoden public int indeksTil(T verdi) som en ekstra metode i TabellKø. Den skal returnere posisjonen til første forekomst av verdi i køen. Ligger verdi først er posisjonen 0, nest først 1, osv. Hvis verdi ikke ligger i køen, skal metoden returnere -1.
+```java
+    public int indeksTil(T verdi) {
+        int count = 0;
+
+        int fraTemp = fra;
+
+        for (int i = antall(); i > 0; i--) {
+            if (a[fraTemp++] == verdi) {
+                return count;
+            }
+            count++;
+
+            if(fraTemp == a.length) fraTemp = 0;
+        }
+        return -1;
+    }
+```
+
+
+8. 	Lag metoden public static <T> void snu(Stakk<T> A). Den skal snu rekkefølgen av verdiene på stakken A. Bruk en kø som hjelpemiddel i kodingen.
+```java
+    public static <T> void snu3(Stakk<T> A) {
+        TabellKø<T> queue = new TabellKø<T>();
+
+        while (!A.tom()) queue.leggInn(A.taUt());
+        while (!queue.tom()) A.leggInn(queue.taUt());
+    }
+```
+
+9.  Lag metoden public static <T> void snu(Kø<T> A). Den skal snu rekkefølgen av verdiene i køen A. Bruk en stakk som hjelpemiddel i kodingen. 
+```java
+    public void snu(Kø<T> A) {
+        TabellStakk<T> B = new TabellStakk<>();
+
+        while (!A.tom()) B.leggInn(A.taUt());
+        while (!B.tom()) A.leggInn(B.taUt());
+    }
+```
+
+# Oppgaver til Avsnitt 4.2.4
+1. 	La klassen EnkeltLenketListe implementere Kø. Se Programkode 4.2.4 a). Legg så inn de to metodene kikk() og taUt(). Sjekk at Programkode 4.2.4 c) virker.
+- Done
+
+4. 	Metoden public static <T> void sorter(Kø<T> kø, Stakk<T> stakk, Comparator<? super T> c) skal sortere kø, mens stakk kun skal fungere som hjelpestruktur. Metoden skal kodes uten bruk av andre hjelpestrukturer. Sjekk så at metoden virker uansett hva slags kø eller stakk vi bruker: TabellKø, EnkeltLenketListe (se oppgave 1), LenketKø, TabellStakk eller LenketStakk. F.eks. skal flg. kode virke: 
+```java
+    public static <T> void sorter(Kø<T> kø, Stakk<T> stakk, Comparator<? super T> c) {
+
+        int n = kø.antall();
+        
+        for (int i = n; i > 0; i--) {
+            stakk.leggInn(kø.taUt());
+            
+            for (int j = 1; j < i; j++) {
+                T temp = kø.taUt();
+                
+                if (c.compare(temp, stakk.kikk()) > 0) {
+                    kø.leggInn(stakk.taUt());
+                    stakk.leggInn(temp);
+                } else {
+                    kø.leggInn(temp);
+                }
+            }
+        }
+        while (!stakk.tom()) kø.leggInn(stakk.taUt());
+    }
+```
+
+TODO:
+Seksjon 4.2.4: oppgave 1, 4
