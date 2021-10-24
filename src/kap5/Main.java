@@ -174,7 +174,7 @@ public class Main {
         StringJoiner s2 = new StringJoiner(", " ,"[", "]");         // StringJoiner
 
         tre12.preorden(tegn -> s.add(tegn));                         // tegn = String
-        tre13.postorden(tegn -> s2.add(tegn));                         // tegn = String
+        tre13.postordenLoop(tegn -> s2.add(tegn));                         // tegn = String
 
 
         System.out.println(s);

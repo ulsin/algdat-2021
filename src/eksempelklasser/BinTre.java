@@ -189,10 +189,14 @@ public class BinTre<T>           // et generisk binærtre
 
     private static <T> void preorden(Node<T> p, Oppgave<? super T> oppgave)
     {
-        oppgave.utførOppgave(p.verdi);                       // utfører oppgaven
-
-        if (p.venstre != null) preorden(p.venstre,oppgave);  // til venstre barn
-        if (p.høyre != null) preorden(p.høyre,oppgave);      // til høyre barn
+        while (true) {
+            oppgave.utførOppgave(p.verdi);                       // utfører oppgaven
+            if (p.venstre != null) preorden(p.venstre,oppgave);  // til venstre barn
+            if (p.høyre == null) {
+                return;
+            }
+            p = p.høyre;
+        }
     }
 
     public void preorden(Oppgave<? super T> oppgave)
@@ -201,12 +205,30 @@ public class BinTre<T>           // et generisk binærtre
     }
 //    Programkode 5.1.7 a)
 
+    private static <T> void inorden(Node<T> p, Oppgave<? super T> oppgave)
+    {
+        while (true) {
+            if (p.venstre != null) inorden(p.venstre,oppgave);
+            oppgave.utførOppgave(p.verdi);
+            if (p.høyre == null) {
+                return;
+            }
+            p = p.høyre;
+        }
+    }
+
+    public void inorden(Oppgave <? super T> oppgave)
+    {
+        if (!tom()) inorden(rot,oppgave);
+    }
+//    Programkode 5.1.7 d)
+
     private static <T> void postorden(Node<T> p, Oppgave<? super T> oppgave) {
         if (p.venstre != null) postorden(p.venstre,oppgave);  // til venstre barn
         if (p.høyre != null) postorden(p.høyre,oppgave);
+
         // går til først første blad, så gjør oppgaven,
         oppgave.utførOppgave(p.verdi);                       // utfører oppgaven
-
     }
 
     public void postorden(Oppgave<? super T> oppgave)
@@ -214,6 +236,35 @@ public class BinTre<T>           // et generisk binærtre
         if (!tom()) postorden(rot,oppgave);  // sjekker om treet er tomt
     }
     // Oppgave
+
+    // iterativ versjon
+    public void postordenLoop(Oppgave<? super T> oppgave) {
+        if (tom()) return;   // tomt tre
+
+        Stakk<Node<T>> log = new TabellStakk<>();  // en stakk
+        Stakk<Node<T>> stakk = new TabellStakk<>();  // en stakk
+
+        log.leggInn(rot);
+
+        while (!log.tom()) {
+
+            Node<T> p = log.taUt();
+            stakk.leggInn(p);
+
+            // går til mest venstre node og starter der
+            if (p.venstre != null) {
+                log.leggInn(p.venstre);
+            }
+
+            if (p.høyre != null) {
+                log.leggInn(p.høyre);
+            }
+        }
+
+        while (!stakk.tom()) {
+            oppgave.utførOppgave(stakk.taUt().verdi);
+        }
+    }
 
     private static <T> void nullstill(Node<T> p) {
         if (p.venstre != null) nullstill(p.venstre);  // til venstre barn
