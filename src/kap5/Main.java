@@ -3,6 +3,7 @@ package kap5;
 import eksempelklasser.*;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.StringJoiner;
 
 public class Main {
@@ -192,6 +193,42 @@ public class Main {
 
 
 //        Programkode 5.1.7 b) Oppgave
+
+        int[] posisjon15 = {1,2,3,4,5,6,7,8,9,10};             // posisjoner og
+        String[] verdi15 = "ABCDEFGHIJ".split("");             // verdier i nivåorden
+
+        BinTre<String> tre15 = new BinTre<>(posisjon15, verdi15);  // konstruktør
+
+        for (String s15 : tre15) {
+            if (s15.equals("F")) {
+                break;
+            }
+            System.out.print(s15 + " ");      // for-alle-løkke
+        }
+        // Utskrift: H D I B J E A F C G
+
+        System.out.println(" ");
+
+        Iterator<String> tre15om = tre15.omvendtIterator();
+
+        while (tre15om.hasNext()) {
+            System.out.print(tre15om.next() + " ");
+        }
+
+        System.out.println("preiterator: \n");
+
+        Iterator<String> tre15pre = tre15.preIterator();
+
+        while (tre15pre.hasNext()) {
+            System.out.print(tre15pre.next() + " ");
+        }
+
+//        Programkode 5.1.11 f)
+
+        System.out.println(" ");
+
+        System.out.println(tre15.antallBladnoder());
+        System.out.println(tre15.maksPos());
 
     }
 }
