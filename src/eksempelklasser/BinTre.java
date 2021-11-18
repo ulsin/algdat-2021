@@ -387,6 +387,42 @@ public class BinTre<T> implements Iterable<T>           // et generisk binærtre
         antall = 0;
     }
 
+    public String minimumsGrenen(Comparator<? super T> c) {
+        if (tom()) {
+            return "[]";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append('[');
+
+
+        Node<T> p = rot;
+
+        while (p.venstre != null || p.høyre != null) {
+
+            sb.append(p.verdi).append(',').append(' ');
+
+            if (p.venstre != null && p.høyre == null) {
+                p = p.venstre;
+            } else if (p.venstre == null && p.høyre != null) {
+                p = p.høyre;
+            } else if (p.venstre == null && p.høyre == null) {
+                break;
+            }
+
+            // dette skjer hvis begge ikke er null
+            if (c.compare(p.venstre.verdi, p.høyre.verdi) <= 0) { // hvis venstre er like eller mindre
+                p = p.venstre;
+            } else { // hvis høyre var større enn venstre
+                p = p.høyre;
+            }
+        }
+
+        sb.append(p.verdi).append(']');
+
+        return sb.toString();
+    }
+
 
     public Iterator<T> iterator()     // skal ligge i class BinTre
     {
